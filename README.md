@@ -1,6 +1,6 @@
 # fivem-scaleform-lib
 ## A library of GTA 5 scaleforms for FiveM. All scaleforms can be activated using events.
- All events are client-side only. If you want to use them from server-side too, you will need to add register them in `cl_main.lua`.
+ All events are client-side only. If you want to use them from server-side too, you will need to register them in `cl_main.lua`.
  
  As I find more usable scaleforms, I will keep this resource updated. If you know some cool scaleforms, feel free to make a PR.
 
