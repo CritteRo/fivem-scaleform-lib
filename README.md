@@ -10,6 +10,8 @@
 - `TriggerEvent("cS.missionQuit", _title, _subtitle, _waitTimeSeconds, _playShound)`
 - `TriggerEvent("cS.SplashText", _text, _waitTimeSeconds, _playShound)`
 - `TriggerEvent("cS.PopupWarning", _title, _subtitle, _errorText, _waitTimeSeconds, _playShound)`
-- `TriggerEvent("cS.Countdown", _waitTimeSeconds, _playSound)`
+- `TriggerEvent("cS.Countdown", _r, _g, _b, _waitTimeSeconds, _playSound)`
 - `TriggerEvent("cS.MidsizeBanner", _title, _subtitle, _waitTimeSeconds, _playShound)`
 - `TriggerEvent("cS.resultsPanel", _title, _subtitle, _slotsTable, _waitTimeSeconds, _playSound)`
+
+- `TriggerEvent("cS.HeistFinale", _initialText, _table, _money, _xp, _waitTimeSeconds, _playSound)` -- check cl_examples.lua. There's alot of data that needs to be used here.
