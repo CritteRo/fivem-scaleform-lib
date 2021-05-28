@@ -66,12 +66,12 @@ AddEventHandler("cS.PopupWarning", function(_title, _subtitle, _errorCode, _wait
     end)
 end)
 
-AddEventHandler("cS.Countdown", function(_waitTime, _playSound)
+AddEventHandler("cS.Countdown", function(_r, _g, _b, _waitTime, _playSound)
     showCD = true
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    showCountdown(_waitTime)
+    showCountdown(_waitTime, _r, _g, _b)
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
         showCD = false
@@ -87,5 +87,30 @@ AddEventHandler("cS.MidsizeBanner", function(_title, subtitle, _waitTime, _playS
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
         showMidBanner = false
+    end)
+end)
+
+--[[ --needs rework
+AddEventHandler("cS.Credits", function(_waitTime, _playSound)
+    showCreditsBanner = true
+    if _playSound ~= nil and _playSound == true then
+        PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
+    end
+    showCredits("test")
+    Citizen.CreateThread(function()
+        Citizen.Wait(tonumber(_waitTime) * 1000)
+        showCreditsBanner = false
+    end)
+end)
+]]
+AddEventHandler("cS.HeistFinale", function(_initialText, _table, _money, _xp, _waitTime, _playSound)
+    showHeistBanner = true
+    if _playSound ~= nil and _playSound == true then
+        PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
+    end
+    showHeist(_initialText, _table, _money, _xp)
+    Citizen.CreateThread(function()
+        Citizen.Wait(tonumber(_waitTime) * 1000)
+        showHeistBanner = false
     end)
 end)
