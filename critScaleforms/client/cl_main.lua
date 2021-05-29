@@ -6,6 +6,8 @@ showPW = false
 showCD = false
 showMDone = false
 
+RegisterNetEvent("cS.HeistFinale")
+
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
     showBanner = true
     if _playSound ~= nil and _playSound == true then
