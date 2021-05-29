@@ -10,26 +10,27 @@ function ShowBanner(_text1, _text2)
             PushScaleformMovieMethodParameterString(text2)
             PushScaleformMovieMethodParameterInt(0)
             EndScaleformMovieMethod()
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+            return scaleform
         end
-    
+        local scale = drawscaleform2(_text1, _text2)
         while showBanner do
             Citizen.Wait(1)
-            drawscaleform2(_text1, _text2)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
     end)
 end
 
-function ShowSplashText(_text1)
+function ShowSplashText(_text1, _fadeout)
     Citizen.CreateThread(function()
-        function drackSplashText(text1)
+        function drackSplashText(text1, fade)
             local scaleform = RequestScaleformMovie("SPLASH_TEXT")
             while not HasScaleformMovieLoaded(scaleform) do
                 Citizen.Wait(0)
             end
+
             BeginScaleformMovieMethod(scaleform, "SET_SPLASH_TEXT")
             PushScaleformMovieMethodParameterString(text1)
-            PushScaleformMovieMethodParameterInt(1000)
+            PushScaleformMovieMethodParameterInt(5000)
             PushScaleformMovieMethodParameterInt(255)
             PushScaleformMovieMethodParameterInt(255)
             PushScaleformMovieMethodParameterInt(255)
@@ -51,12 +52,17 @@ function ShowSplashText(_text1)
             PushScaleformMovieMethodParameterInt(255)
             EndScaleformMovieMethod()
 
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+            BeginScaleformMovieMethod(scaleform, "SPLASH_TEXT_TRANSITION_OUT")
+            PushScaleformMovieMethodParameterInt(fade)
+            PushScaleformMovieMethodParameterInt(0)
+            EndScaleformMovieMethod()
+
+            return scaleform
         end
-    
+        local scale = drackSplashText(_text1, _fadeout)
         while showST do
             Citizen.Wait(1)
-            drackSplashText(_text1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
     end)
 end
@@ -83,33 +89,43 @@ function ShowResultsPanel(_title, _subtitle, _slots)
                 PushScaleformMovieMethodParameterString(slot[i].name)
                 EndScaleformMovieMethod()
             end
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+            return scaleform
         end
-    
+        local scale = drawPanel(_title, _subtitle, _slots)
         while showRP do
             Citizen.Wait(1)
-            drawPanel(_title, _subtitle, _slots)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
     end)
 end
 
-function showMissionQuit(_title, _subtitle)
+function showMissionQuit(_title, _subtitle, _duration)
     Citizen.CreateThread(function()
-        function drawScale(string1, string2)
+        function drawScale(string1, string2, duration)
             local scaleform = RequestScaleformMovie("mission_quit")
             while not HasScaleformMovieLoaded(scaleform) do
                 Citizen.Wait(0)
             end
+
             BeginScaleformMovieMethod(scaleform, "SET_TEXT")
             PushScaleformMovieMethodParameterString(string1)
             PushScaleformMovieMethodParameterString(string2)
             EndScaleformMovieMethod()
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+
+            BeginScaleformMovieMethod(scaleform, "TRANSITION_OUT")
+            if duration > 4000 then
+                PushScaleformMovieMethodParameterInt(duration - 1000)
+            else
+                PushScaleformMovieMethodParameterInt(3000)
+            end
+            EndScaleformMovieMethod()
+            return scaleform
         end
-    
+        
+        local scale = drawScale(_title, _subtitle, _duration)
         while showMQ do
             Citizen.Wait(1)
-            drawScale(_title, _subtitle)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
     end)
 end
@@ -131,25 +147,19 @@ function showPopupWarning(_title, _subtitle, _errorCode)
             PushScaleformMovieFunctionParameterString(_errorCode)
             PopScaleformMovieFunctionVoid()
 
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
+            return scaleform
         end
+        local scale = drawPopup(_title, _subtitle, _alertType)
         while showPW do
             Citizen.Wait(1)
-            drawPopup(_title, _subtitle, _alertType)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255, 0)
         end
     end) 
 end
 
 function showCountdown(maxNumber, _r, _g, _b)
     local nr = maxNumber
-    Citizen.CreateThread(function()
-        while showCD do
-            Citizen.Wait(1000)
-            if nr >= 1 then
-                nr = nr - 1
-            end
-        end
-    end)
+    local scale = 0
     Citizen.CreateThread(function()
         function drawCountdown(string1, r, g, b)
             local scaleform = RequestScaleformMovie("COUNTDOWN")
@@ -171,12 +181,21 @@ function showCountdown(maxNumber, _r, _g, _b)
             PushScaleformMovieMethodParameterInt(b)
             EndScaleformMovieMethod()
 
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+            return scaleform
         end
-    
+        scale = drawCountdown(nr, _r, _g, _b)
         while showCD do
             Citizen.Wait(1)
-            drawCountdown(nr, _r, _g, _b)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
+    end)
+    Citizen.CreateThread(function()
+        while showCD do
+            Citizen.Wait(1000)
+            if nr >= 1 then
+                nr = nr - 1
+                scale = drawCountdown(nr, _r, _g, _b)
+            end
         end
     end)
 end
@@ -195,12 +214,17 @@ function showMidsizeBanner(_title, _subtitle)
             PushScaleformMovieMethodParameterInt(2)
             PushScaleformMovieMethodParameterBool(true)
             EndScaleformMovieMethod()
-            DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255)
+
+            BeginScaleformMovieMethod(scaleform, "SHARD_ANIM_OUT")
+            PushScaleformMovieMethodParameterInt(2)
+            PushScaleformMovieMethodParameterInt(3000)
+            EndScaleformMovieMethod()
+            return scaleform
         end
-    
+        local scale = drawScale(_title, _subtitle)
         while showMidBanner do
             Citizen.Wait(1)
-            drawScale(_title, _subtitle)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
     end)
 end

@@ -23,7 +23,7 @@ AddEventHandler("cS.missionQuit", function(_title, _subtitle, _waitTime, _playSo
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    showMissionQuit(_title, _subtitle)
+    showMissionQuit(_title, _subtitle, _waitTime)
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
         showMQ = false
@@ -47,7 +47,7 @@ AddEventHandler("cS.SplashText", function(_title, _waitTime, _playSound)
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    ShowSplashText(_title)
+    ShowSplashText(_title, _waitTime * 1000)
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
         showST = false
