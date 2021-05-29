@@ -57,11 +57,11 @@ RegisterCommand('heist', function()
         finishMoney = 53000,
         topText = "",
         bottomText = "",
-        rightHandStat = "",
-        rightHandStatIcon = 3, --0 or 1 = checked, 2 = X, 3 = no icon
+        rightHandStat = "woah",
+        rightHandStatIcon = 0, --0 or 1 = checked, 2 = X, 3 = no icon
     }
     local _xp = { --fourth and final slide. XP Bar slide. Will start with currentRank and a xp bar filled with (xpBeforeGain - minLevelXP) and will add xpGained. If you rank up, it goes to "Level Up" slide.
-        xpGained = 0,
+        xpGained = 500,
         xpBeforeGain = 1400,
         minLevelXP = 600,
         maxLevelXP = 2360,

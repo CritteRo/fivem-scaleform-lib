@@ -265,8 +265,8 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
 
             BeginScaleformMovieMethod(scaleform, "CREATE_STAT_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(0)
-            PushScaleformMovieMethodParameterInt(0)
+            PushScaleformMovieMethodParameterInt(2)
+            PushScaleformMovieMethodParameterInt(255)
             EndScaleformMovieMethod()
 
             BeginScaleformMovieMethod(scaleform, "ADD_BACKGROUND_TO_WALL")
@@ -375,10 +375,11 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
         StartScreenEffect("HeistCelebEnd")
         while showHeistBanner do
             Citizen.Wait(1)
-            DrawRect(0.0, 0.0, 2.0, 2.0, 0, 92, 21, 160)
+            DrawRect(0.0, 0.0, 2.0, 2.0, 0, 49, 1, 124)
             DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
         StopScreenEffect("HeistCelebEnd")
         StartScreenEffect("HeistCelebToast")
     end)
 end
+
