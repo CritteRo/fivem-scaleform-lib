@@ -43,25 +43,25 @@ RegisterCommand('heist', function()
     --All 4 tables are required in order to proprer syncronize the scaleform.
     local _initialText = { --first slide. Consists of 3 text lines.
         missionTextLabel = "~y~BANK HEIST~s~", 
-        passFailTextLabel = "~g~PASSED.~s~",
+        passFailTextLabel = "PASSED.",
         messageLabel = "I don't even know why we have a third message.",
     }
     local _table = { --second slide. You can add as many "stats" as you want. They will appear from botton to top, so keep that in mind.
-        {stat = "value4", value = "TEST"},
-        {stat = "value3", value = "~g~$~s~50000"},
-        {stat = "value2", value = "~b~1999~s~"},
-        {stat = "value1", value = "TEST"},
+        {stat = "Total Payout", value = "~g~$~s~50000"},
+        --{stat = "value3", value = "~g~$~s~50000"},
+        --{stat = "value2", value = "~b~1999~s~"},
+        --{stat = "value1", value = "TEST"},
     }
     local _money = { --third slide. Incremental money. It will start from startMoney and increment to finishMoney. top and bottom text appear above/below the money string.
-        startMoney = 0,
-        finishMoney = 40000,
-        topText = "Dolla' Bill bby",
-        bottomText = "BOTTOM TEXT",
-        rightHandStat = "Legit Cash",
-        rightHandStatIcon = 2, --0 or 1 = checked, 2 = X, 3 = no icon
+        startMoney = 3000,
+        finishMoney = 53000,
+        topText = "",
+        bottomText = "",
+        rightHandStat = "",
+        rightHandStatIcon = 3, --0 or 1 = checked, 2 = X, 3 = no icon
     }
     local _xp = { --fourth and final slide. XP Bar slide. Will start with currentRank and a xp bar filled with (xpBeforeGain - minLevelXP) and will add xpGained. If you rank up, it goes to "Level Up" slide.
-        xpGained = 1000,
+        xpGained = 0,
         xpBeforeGain = 1400,
         minLevelXP = 600,
         maxLevelXP = 2360,
@@ -70,5 +70,5 @@ RegisterCommand('heist', function()
         rankTextSmall = "LEVEL UP.",
         rankTextBig = "~b~Nice.~s~",
     }
-    TriggerEvent("cS.HeistFinale", _initialText, _table, _money, _xp, 20, true)
+    TriggerEvent("cS.HeistFinale", _initialText, _table, _money, _xp, 10, true)
 end)
