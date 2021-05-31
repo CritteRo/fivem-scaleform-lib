@@ -112,13 +112,17 @@ function showMissionQuit(_title, _subtitle, _duration)
             PushScaleformMovieMethodParameterString(string2)
             EndScaleformMovieMethod()
 
+            --[[BeginScaleformMovieMethod(scaleform, "TRANSITION_IN")
+            PushScaleformMovieMethodParameterInt(1000)
+            EndScaleformMovieMethod()
+            --== "TRANSITION_OUT" CAUSES THE SCALEFORM TO NOT RUN A SECOND TIME. ==--
             BeginScaleformMovieMethod(scaleform, "TRANSITION_OUT")
             if duration > 4000 then
                 PushScaleformMovieMethodParameterInt(duration - 1000)
             else
                 PushScaleformMovieMethodParameterInt(3000)
             end
-            EndScaleformMovieMethod()
+            EndScaleformMovieMethod()]]
             return scaleform
         end
         
