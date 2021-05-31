@@ -72,3 +72,15 @@ RegisterCommand('heist', function()
     }
     TriggerEvent("cS.HeistFinale", _initialText, _table, _money, _xp, 10, true)
 end)
+
+RegisterCommand('credits', function() --Credit Block. You can add a role, and how many people you want. 8 _waitTimeSeconds should be the standard.
+    --TriggerEvent("cS.Credits", roleString, namesString, xScreenCoord, yScreenCoord, _waitTimeSeconds, _playSound)
+    --If you want more names in the namesString field, separate them with \n like in the example
+    Citizen.CreateThread(function()
+        TriggerEvent("cS.Credits", "Resource Developer", "CritteR\n   or CritteRo", 0.4, 0.5, 8, true)
+        Citizen.Wait(10*1000)
+        TriggerEvent("cS.Credits", "Scaleforms provided by", "Vespura\n\nThanks! <3", 0.7, 0.2, 8, false)
+        Citizen.Wait(10*1000)
+        TriggerEvent("cS.Credits", "Third Credit Block", "Just for looks", 1.0, 0.15, 8, false)
+    end)
+end)

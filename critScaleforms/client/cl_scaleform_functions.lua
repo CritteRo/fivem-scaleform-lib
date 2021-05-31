@@ -224,37 +224,107 @@ function showMidsizeBanner(_title, _subtitle)
     end)
 end
 
---[[  --I'm having a hard time making this work. will retest later
-function showCredits(_data)
+function showCredits(_role, _name, _x, _y)
     Citizen.CreateThread(function()
-        function drawCredits(string1, string2)
+        function drawCredits(role, name)
             local scaleform = RequestScaleformMovie("OPENING_CREDITS")
             while not HasScaleformMovieLoaded(scaleform) do
                 Citizen.Wait(0)
             end
 
             BeginScaleformMovieMethod(scaleform, "TEST_CREDIT_BLOCK")
-            PushScaleformMovieMethodParameterString("Developer")
-            PushScaleformMovieMethodParameterString("CritteR")
+            ScaleformMovieMethodAddParamTextureNameString_2(role)
+            ScaleformMovieMethodAddParamTextureNameString_2(name)
+            PushScaleformMovieMethodParameterString('left')
+            PushScaleformMovieMethodParameterFloat(0.0)
+            PushScaleformMovieMethodParameterFloat(50.0)
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterFloat(0.06)
-            PushScaleformMovieMethodParameterFloat(0.56)
-            PushScaleformMovieMethodParameterInt(2000)
+            PushScaleformMovieMethodParameterInt(5)
+            PushScaleformMovieMethodParameterInt(10)
+            PushScaleformMovieMethodParameterInt(10)
+            EndScaleformMovieMethod()
+            
+            --=================================--
+                --SETUP_CREDIT_BLOCK might give more customization, but further testing needs to be done.
+                --"HIDE" function completly breaks SETUP_CREDIT_BLOCK, which means to we need to rely on stopping the scaleform draw.
+            --=================================--
+            --[[BeginScaleformMovieMethod(scaleform, "SETUP_CREDIT_BLOCK")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterFloat(0.0)
+            PushScaleformMovieMethodParameterFloat(0.0)
             PushScaleformMovieMethodParameterInt(0)
-            PushScaleformMovieMethodParameterInt(0)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(2)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform, "ADD_ROLE_TO_CREDIT_BLOCK")
+            PushScaleformMovieMethodParameterInt(1)
+            ScaleformMovieMethodAddParamTextureNameString_2(role)
+            PushScaleformMovieMethodParameterFloat(0.0)
+            PushScaleformMovieMethodParameterInt(4)
+            PushScaleformMovieMethodParameterBool(true)
             PushScaleformMovieMethodParameterInt(0)
             EndScaleformMovieMethod()
 
+            BeginScaleformMovieMethod(scaleform, "ADD_NAMES_TO_CREDIT_BLOCK")
+            PushScaleformMovieMethodParameterInt(1)
+            ScaleformMovieMethodAddParamTextureNameString_2(name)
+            PushScaleformMovieMethodParameterFloat(100.1)
+            PushScaleformMovieMethodParameterString("    ")
+            PushScaleformMovieMethodParameterBool(true)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform, "SHOW_CREDIT_BLOCK")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(2)
+            PushScaleformMovieMethodParameterInt(4)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()]]
+
+            --=================================================--
+                --This is a single line text (duh). Text below combines "name" font and "role" color from credit block.
+            --=================================================--
+            --[[BeginScaleformMovieMethod(scaleform, "SETUP_SINGLE_LINE")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterFloat(0.0)
+            PushScaleformMovieMethodParameterFloat(0.0)
+            PushScaleformMovieMethodParameterInt(0)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterString("Single line text that can show everything you want")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterBool(true)
+            PushScaleformMovieMethodParameterInt(0)
+            PushScaleformMovieMethodParameterFloat(0.0)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform, "SHOW_SINGLE_LINE")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(0)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform, "HIDE")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(2)
+            PushScaleformMovieMethodParameterInt(0)
+            PushScaleformMovieMethodParameterInt(0)
+            EndScaleformMovieMethod()]]
             return scaleform
         end
-        local scale = drawCredits(0, 0)
+        local scale = drawCredits(_role, _name)
         while showCreditsBanner do
             Citizen.Wait(1)
-            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+            DrawScaleformMovie(scale, _x, _y, 0.71, 0.68, 255, 255, 255, 255)
         end
     end)
 end
-]]
+
 function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
     Citizen.CreateThread(function()
         function drawHeist(_initialText, _table, _money, _xp)
