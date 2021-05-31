@@ -6,12 +6,8 @@
 
 ## Current list of scaleforms included:
 
-- `TriggerEvent('cS.banner', _title, _subtitle, _waitTimeSeconds, _playShound)`
-- `TriggerEvent("cS.missionQuit", _title, _subtitle, _waitTimeSeconds, _playShound)`
-- `TriggerEvent("cS.SplashText", _text, _waitTimeSeconds, _playShound)`
-- `TriggerEvent("cS.PopupWarning", _title, _subtitle, _errorText, _waitTimeSeconds, _playShound)`
-- `TriggerEvent("cS.Countdown", _r, _g, _b, _waitTimeSeconds, _playSound)`
-- `TriggerEvent("cS.MidsizeBanner", _title, _subtitle, _waitTimeSeconds, _playShound)`
-- `TriggerEvent("cS.resultsPanel", _title, _subtitle, _slotsTable, _waitTimeSeconds, _playSound)`
+You can find all the relevant information, and how to use every scaleform on the [Wiki](https://github.com/CritteRo/fivem-scaleform-lib/wiki)
 
-- `TriggerEvent("cS.HeistFinale", _initialText, _table, _money, _xp, _waitTimeSeconds, _playSound)` -- check cl_examples.lua. There's alot of data that needs to be used here.
+## Issues and Pull Requests:
+
+Creating issues and pull requests are always appreciated! I started this resource because I really like working with scaleforms, and I want future devs to be able to access these scaleforms without any inconvenience.
