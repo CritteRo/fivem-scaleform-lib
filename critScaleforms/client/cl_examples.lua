@@ -84,3 +84,19 @@ RegisterCommand('credits', function() --Credit Block. You can add a role, and ho
         TriggerEvent("cS.Credits", "Third Credit Block", "Just for looks", 1.0, 0.15, 8, false)
     end)
 end)
+
+RegisterCommand('title', function(source, args)
+    if args[1] ~= nil then
+        local str = ""
+        for k, v in pairs(args) do
+            if k ~= nil then
+                str = string.format("%s %s", str, tostring(args[k]))
+            else
+                break
+            end
+        end
+        TriggerEvent("cS.ChangePauseMenuTitle", str)
+    else
+        TriggerEvent("cS.ChangePauseMenuTitle", "Please type a name after ~y~/title~s~.")
+    end
+end)

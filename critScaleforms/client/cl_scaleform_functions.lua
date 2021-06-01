@@ -457,3 +457,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
     end)
 end
 
+function changePauseMenuTitle(title)
+    AddTextEntry('FE_THDR_GTAO', title)
+end
+

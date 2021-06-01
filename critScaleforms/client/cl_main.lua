@@ -115,3 +115,7 @@ AddEventHandler("cS.HeistFinale", function(_initialText, _table, _money, _xp, _w
         showHeistBanner = false
     end)
 end)
+
+AddEventHandler("cS.ChangePauseMenuTitle", function(_title)
+    changePauseMenuTitle(_title)
+end)
