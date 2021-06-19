@@ -1,3 +1,15 @@
+scalformTimer = {
+    ['ShowBanner'] = {isShown = false, timer = 0},
+    ['ShowSplashText'] = {isShown = false, timer = 0},
+    ['ShowResultsPanel'] = {isShown = false, timer = 0},
+    ['showMissionQuit'] = {isShown = false, timer = 0},
+    ['showPopupWarning'] = {isShown = false, timer = 0},
+    ['showCountdown'] = {isShown = false, timer = 0},
+    ['showMidsizeBanner'] = {isShown = false, timer = 0},
+    ['showSaving'] = {isShown = false, timer = 0},
+}
+
+
 function ShowBanner(_text1, _text2)
     Citizen.CreateThread(function()
         function drawscaleform2(text1, text2)
@@ -461,3 +473,28 @@ function changePauseMenuTitle(title)
     AddTextEntry('FE_THDR_GTAO', title)
 end
 
+function showSaving(_subtitle)
+    Citizen.CreateThread(function()
+        function drawScale(string1)
+            local scaleform = RequestScaleformMovie("HUD_SAVING")
+            while not HasScaleformMovieLoaded(scaleform) do
+                Citizen.Wait(0)
+            end
+
+            BeginScaleformMovieMethod(scaleform, "SET_SAVING_TEXT_STANDALONE")
+            PushScaleformMovieMethodParameterInt(1) --the icon.. 1 is a full disk.. with a fade animation. Can't find the normal spinning disk.
+            PushScaleformMovieMethodParameterString(string1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform, "SHOW")
+            EndScaleformMovieMethod()
+
+            return scaleform
+        end
+        local scale = drawScale(_subtitle)
+        while toggleSave do
+            Citizen.Wait(1)
+            DrawScaleformMovie(scale, 0.82, 0.95, 0.35, 0.05, 255, 255, 255, 255)
+        end
+    end)
+end

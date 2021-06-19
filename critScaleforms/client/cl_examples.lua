@@ -100,3 +100,16 @@ RegisterCommand('title', function(source, args)
         TriggerEvent("cS.ChangePauseMenuTitle", "Please type a name after ~y~/title~s~.")
     end
 end)
+
+RegisterCommand('save', function(source, args) --Usage: /save You can write anything here
+    local _message = ""
+    for k, v in pairs(args) do
+        if k ~= nil then
+            _message = string.format("%s %s", _message, tostring(args[k]))
+        else
+            break
+        end
+    end
+    --TriggerEvent('cS.Saving', _text, _waitTime, _playSound)
+    TriggerEvent('cS.Saving', _message, 7, true)
+end)
