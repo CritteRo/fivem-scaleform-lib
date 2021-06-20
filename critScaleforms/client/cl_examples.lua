@@ -110,6 +110,19 @@ RegisterCommand('save', function(source, args) --Usage: /save You can write anyt
             break
         end
     end
-    --TriggerEvent('cS.Saving', _text, _waitTime, _playSound)
-    TriggerEvent('cS.Saving', _message, 7, true)
+    --TriggerEvent('cS.Saving', _text, _type, _waitTime, _playSound)
+    TriggerEvent('cS.Saving', _message, 1, 7, true) --type 1 = scalefrom. 2 or other = non-scaleform.
+end)
+
+RegisterCommand('save2', function(source, args) --Usage: /save You can write anything here
+    local _message = ""
+    for k, v in pairs(args) do
+        if k ~= nil then
+            _message = string.format("%s %s", _message, tostring(args[k]))
+        else
+            break
+        end
+    end
+    --TriggerEvent('cS.Saving', _text, _type, _waitTime, _playSound)
+    TriggerEvent('cS.Saving', _message, 2, 7, true) --type 1 = scalefrom. 2 or other = non-scaleform.
 end)

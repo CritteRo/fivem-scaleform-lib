@@ -120,14 +120,23 @@ AddEventHandler("cS.ChangePauseMenuTitle", function(_title)
     changePauseMenuTitle(_title)
 end)
 
-AddEventHandler("cS.Saving", function(subtitle, _waitTime, _playSound)
-    toggleSave = true
+AddEventHandler("cS.Saving", function(_subtitle, _type, _waitTime, _playSound)
+    
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    showSaving(subtitle)
+    if _type == 1 then
+        toggleSave = true
+        showSaving(_subtitle)
+    else
+        showBusySpinnerNoScaleform(_subtitle)
+    end
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
-        toggleSave = false
+        if _type == 1 then
+            toggleSave = false
+        else
+            BusyspinnerOff()
+        end
     end)
 end)

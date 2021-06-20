@@ -498,3 +498,9 @@ function showSaving(_subtitle)
         end
     end)
 end
+
+function showBusySpinnerNoScaleform(_text)
+    BeginTextCommandBusyspinnerOn("STRING")
+    AddTextComponentSubstringPlayerName(_text)
+    EndTextCommandBusyspinnerOn(1)
+end
