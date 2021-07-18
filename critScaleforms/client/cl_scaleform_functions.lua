@@ -344,21 +344,24 @@ end
 function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
     Citizen.CreateThread(function()
         function drawHeist(_initialText, _table, _money, _xp)
-            local scaleform = RequestScaleformMovie("HEIST_CELEBRATION")
+            local scaleform = RequestScaleformMovie("HEIST2_CELEBRATION")
             while not HasScaleformMovieLoaded(scaleform) do
                 Citizen.Wait(0)
             end
 
             BeginScaleformMovieMethod(scaleform, "CREATE_STAT_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(2)
-            PushScaleformMovieMethodParameterInt(255)
+            PushScaleformMovieMethodParameterInt(6)
+            PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
             BeginScaleformMovieMethod(scaleform, "ADD_BACKGROUND_TO_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(100)
-            PushScaleformMovieMethodParameterBool(false)
+            PushScaleformMovieMethodParameterInt(200)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
             --[[BeginScaleformMovieMethod(scaleform, "ADD_COMPLETE_MESSAGE_TO_WALL") --this should be used as it's own scaleform event.
@@ -461,7 +464,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
         StartScreenEffect("HeistCelebEnd")
         while showHeistBanner do
             Citizen.Wait(1)
-            DrawRect(0.0, 0.0, 2.0, 2.0, 0, 49, 1, 124)
+            DrawRect(0.0, 0.0, 2.0, 2.0, 0, 44, 1, 160)
             DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
         StopScreenEffect("HeistCelebEnd")
