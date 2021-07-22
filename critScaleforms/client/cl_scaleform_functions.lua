@@ -111,6 +111,40 @@ function ShowResultsPanel(_title, _subtitle, _slots)
     end)
 end
 
+function ShowMissionInfoPanel(_data, _x, _y, _width)
+    Citizen.CreateThread(function()
+        function drawMissionInfo(data)
+            local scaleform = RequestScaleformMovie("MP_MISSION_NAME_FREEMODE")
+            while not HasScaleformMovieLoaded(scaleform) do
+                Citizen.Wait(0)
+            end
+            BeginScaleformMovieMethod(scaleform, "SET_MISSION_INFO")
+            PushScaleformMovieMethodParameterString(data.name)
+            PushScaleformMovieMethodParameterString(data.type)
+            PushScaleformMovieMethodParameterString("")
+            PushScaleformMovieMethodParameterString(data.percentage)
+            PushScaleformMovieMethodParameterString("")
+            PushScaleformMovieMethodParameterBool(data.rockstarVerified)
+            PushScaleformMovieMethodParameterString(data.playersRequired)
+            PushScaleformMovieMethodParameterInt(data.rp)
+            PushScaleformMovieMethodParameterInt(data.cash)
+            PushScaleformMovieMethodParameterString(data.time)
+            EndScaleformMovieMethod()
+
+            return scaleform
+        end
+        local scale = drawMissionInfo(_data)
+        while showMI do
+            Citizen.Wait(1)
+            local x = 0.5
+            local y = 0.5
+            local width = 0.5
+            local height = width / 0.65
+            DrawScaleformMovie(scale, x, y, width, height, 255, 255, 255, 255, 0)
+        end
+    end)
+end
+
 function showMissionQuit(_title, _subtitle, _duration)
     Citizen.CreateThread(function()
         function drawScale(string1, string2, duration)

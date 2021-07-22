@@ -1,6 +1,7 @@
 showBanner = false
 showMQ = false
 showRP = false
+showMI = false
 showST = false
 showPW = false
 showCD = false
@@ -41,6 +42,18 @@ AddEventHandler("cS.resultsPanel", function(_title, _subtitle, _slots, _waitTime
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
         showRP = false
+    end)
+end)
+
+AddEventHandler("cS.missionInfo", function(_data, _x, _y, _width, _waitTime, _playSound)
+    showMI = true
+    if _playSound ~= nil and _playSound == true then
+        PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
+    end
+    ShowMissionInfoPanel(_data, _x, _y, _width)
+    Citizen.CreateThread(function()
+        Citizen.Wait(tonumber(_waitTime) * 1000)
+        showMI = false
     end)
 end)
 
