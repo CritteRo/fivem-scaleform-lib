@@ -28,7 +28,7 @@ RegisterCommand('me', function() --midsize banner. Same as big banner, but midsi
     TriggerEvent("cS.MidsizeBanner", "~y~Test Scaleform~s~.", "You ~g~can ~r~use ~y~colors ~b~here ~s~too.", 5, true)
 end)
 
-RegisterCommand('rp', function() --Results pannel. _slots argument needs to be a table. slots[i].state can be 0 or 2 for "not selected" and 1 or 3 for "selected".
+RegisterCommand('rp', function() --Results panel. _slots argument needs to be a table. slots[i].state can be 0 or 2 for "not selected" and 1 or 3 for "selected".
     local slots = {
         {name = "test1", state = 0},
         {name = "test2", state = 1},
@@ -37,6 +37,21 @@ RegisterCommand('rp', function() --Results pannel. _slots argument needs to be a
     }
     --TriggerEvent("cS.resultsPanel", _title, _subtitle, _slotsTable, _waitTimeSeconds, _playSound)
     TriggerEvent("cS.resultsPanel", "~y~Test Scaleform~s~.", "You ~g~can ~r~use ~y~colors ~b~here ~s~too.", slots, 5, true)
+end)
+
+RegisterCommand('mi', function() --Mission info panel
+    local data = {
+        name = "Mission name",
+        type = "Mission type",
+        percentage = "15",
+        rockstarVerified = true,
+        playersRequired = "3",
+        rp = 0,
+        cash = 0,
+        time = ""
+    }
+    --TriggerEvent("cS.missionInfo", _data, _x, _y, _width, _waitTime, _playSound)
+    TriggerEvent("cS.missionInfo", data, 0.5, 0.5, 0.5, 5, true)
 end)
 
 RegisterCommand('heist', function()
