@@ -92,9 +92,9 @@ RegisterCommand('credits', function() --Credit Block. You can add a role, and ho
     --TriggerEvent("cS.Credits", roleString, namesString, xScreenCoord, yScreenCoord, _waitTimeSeconds, _playSound)
     --If you want more names in the namesString field, separate them with \n like in the example
     Citizen.CreateThread(function()
-        TriggerEvent("cS.Credits", "Resource Developer", "CritteR\n   or CritteRo", 0.4, 0.5, 8, true)
+        TriggerEvent("cS.Credits", "Test Role", "Name1 \n   Name 2", 0.4, 0.5, 8, true)
         Citizen.Wait(10*1000)
-        TriggerEvent("cS.Credits", "Scaleforms provided by", "Vespura\n\nThanks! <3", 0.7, 0.2, 8, false)
+        TriggerEvent("cS.Credits", "Decompiled scaleforms provided by", "Vespura", 0.7, 0.2, 8, false)
         Citizen.Wait(10*1000)
         TriggerEvent("cS.Credits", "Third Credit Block", "Just for looks", 1.0, 0.15, 8, false)
     end)
