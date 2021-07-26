@@ -11,13 +11,26 @@ RegisterNetEvent("cS.HeistFinale")
 
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
     showBanner = true
+    local scale = 0
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    ShowBanner(_title, _subtitle)
+    scale = ShowBanner(_title, _subtitle)
     Citizen.CreateThread(function()
-        Citizen.Wait(tonumber(_waitTime) * 1000)
+        Citizen.Wait((tonumber(_waitTime) * 1000) - 400)
+        BeginScaleformMovieMethod(scale, "SHARD_ANIM_OUT")
+        PushScaleformMovieMethodParameterInt(2)
+        PushScaleformMovieMethodParameterFloat(0.4)
+        PushScaleformMovieMethodParameterInt(0)
+        EndScaleformMovieMethod()
+        Citizen.Wait(400)
         showBanner = false
+    end)
+    Citizen.CreateThread(function()
+        while showBanner do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
     end)
 end)
 

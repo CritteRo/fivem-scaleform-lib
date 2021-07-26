@@ -11,25 +11,20 @@ scalformTimer = {
 
 
 function ShowBanner(_text1, _text2)
-    Citizen.CreateThread(function()
-        function drawscaleform2(text1, text2)
-            local scaleform = RequestScaleformMovie("mp_big_message_freemode")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(1)
-            end
-            BeginScaleformMovieMethod(scaleform, "SHOW_SHARD_WASTED_MP_MESSAGE")
-            PushScaleformMovieMethodParameterString(text1)
-            PushScaleformMovieMethodParameterString(text2)
-            PushScaleformMovieMethodParameterInt(0)
-            EndScaleformMovieMethod()
-            return scaleform
-        end
-        local scale = drawscaleform2(_text1, _text2)
-        while showBanner do
-            Citizen.Wait(1)
-            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
-        end
-    end)
+    local scaleform = RequestScaleformMovie("mp_big_message_freemode")
+    while not HasScaleformMovieLoaded(scaleform) do
+        Citizen.Wait(1)
+    end
+
+    BeginScaleformMovieMethod(scaleform, "SHOW_SHARD_CENTERED_MP_MESSAGE")
+    EndScaleformMovieMethod()
+
+    BeginScaleformMovieMethod(scaleform, "SHARD_SET_TEXT")
+    PushScaleformMovieMethodParameterString(_text1)
+    PushScaleformMovieMethodParameterString(_text2)
+    PushScaleformMovieMethodParameterInt(0)
+    EndScaleformMovieMethod()
+    return scaleform
 end
 
 function ShowSplashText(_text1, _fadeout)
