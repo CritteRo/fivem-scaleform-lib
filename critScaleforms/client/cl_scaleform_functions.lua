@@ -378,6 +378,16 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
                 Citizen.Wait(0)
             end
 
+            local scaleform_bg = RequestScaleformMovie("HEIST2_CELEBRATION_BG")
+            while not HasScaleformMovieLoaded(scaleform_bg) do
+                Citizen.Wait(0)
+            end
+
+            local scaleform_fg = RequestScaleformMovie("HEIST2_CELEBRATION_FG")
+            while not HasScaleformMovieLoaded(scaleform_fg) do
+                Citizen.Wait(0)
+            end
+
             BeginScaleformMovieMethod(scaleform, "CREATE_STAT_WALL")
             PushScaleformMovieMethodParameterInt(1)
             PushScaleformMovieMethodParameterInt(6)
@@ -487,16 +497,213 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
-            return scaleform
+            --BG
+
+            BeginScaleformMovieMethod(scaleform_bg, "CREATE_STAT_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(6)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform_bg, "ADD_BACKGROUND_TO_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(100)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform_bg, "ADD_MISSION_RESULT_TO_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterString(_initialText.missionTextLabel)
+            PushScaleformMovieMethodParameterString(_initialText.passFailTextLabel)
+            PushScaleformMovieMethodParameterString(_initialText.messageLabel)
+            PushScaleformMovieMethodParameterBool(true)
+            PushScaleformMovieMethodParameterBool(true)
+            PushScaleformMovieMethodParameterBool(true)
+            EndScaleformMovieMethod()
+
+            if _table[1] ~= nil then
+                BeginScaleformMovieMethod(scaleform_bg, "CREATE_STAT_TABLE")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(10)
+                EndScaleformMovieMethod()
+
+                for i, k in pairs(_table) do
+                    BeginScaleformMovieMethod(scaleform_bg, "ADD_STAT_TO_TABLE")
+                    PushScaleformMovieMethodParameterInt(1)
+                    PushScaleformMovieMethodParameterInt(10)
+                    PushScaleformMovieMethodParameterString(_table[i].stat)
+                    PushScaleformMovieMethodParameterString(_table[i].value)
+                    PushScaleformMovieMethodParameterBool(true)
+                    PushScaleformMovieMethodParameterBool(true)
+                    PushScaleformMovieMethodParameterBool(false)
+                    PushScaleformMovieMethodParameterBool(false)
+                    PushScaleformMovieMethodParameterInt(0)
+                    EndScaleformMovieMethod()
+                end
+
+                BeginScaleformMovieMethod(scaleform_bg, "ADD_STAT_TABLE_TO_WALL")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(10)
+                EndScaleformMovieMethod()
+            end
+
+            if _money.startMoney ~= _money.finishMoney then
+                BeginScaleformMovieMethod(scaleform_bg, "CREATE_INCREMENTAL_CASH_ANIMATION")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(20)
+                EndScaleformMovieMethod()
+
+                BeginScaleformMovieMethod(scaleform_bg, "ADD_INCREMENTAL_CASH_WON_STEP")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(20)
+                PushScaleformMovieMethodParameterInt(_money.startMoney)
+                PushScaleformMovieMethodParameterInt(_money.finishMoney)
+                PushScaleformMovieMethodParameterString(_money.topText)
+                PushScaleformMovieMethodParameterString(_money.bottomText)
+                PushScaleformMovieMethodParameterString(_money.rightHandStat)
+                PushScaleformMovieMethodParameterInt(_money.rightHandStatIcon)
+                PushScaleformMovieMethodParameterInt(0)
+                EndScaleformMovieMethod()
+
+                BeginScaleformMovieMethod(scaleform_bg, "ADD_INCREMENTAL_CASH_ANIMATION_TO_WALL")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(20)
+                EndScaleformMovieMethod()
+            end
+
+            if _xp.xpGained ~= 0 then
+                BeginScaleformMovieMethod(scaleform_bg, "ADD_REP_POINTS_AND_RANK_BAR_TO_WALL")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(_xp.xpGained)
+                PushScaleformMovieMethodParameterInt(_xp.xpBeforeGain)
+                PushScaleformMovieMethodParameterInt(_xp.minLevelXP)
+                PushScaleformMovieMethodParameterInt(_xp.maxLevelXP)
+                PushScaleformMovieMethodParameterInt(_xp.currentRank)
+                PushScaleformMovieMethodParameterInt(_xp.nextRank)
+                PushScaleformMovieMethodParameterString(_xp.rankTextSmall)
+                PushScaleformMovieMethodParameterString(_xp.rankTextBig)
+                EndScaleformMovieMethod()
+            end
+
+            BeginScaleformMovieMethod(scaleform_bg, "SHOW_STAT_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform_bg, "createSequence")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            --FG
+
+            BeginScaleformMovieMethod(scaleform_fg, "CREATE_STAT_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(6)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform_fg, "ADD_BACKGROUND_TO_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(100)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform_fg, "ADD_MISSION_RESULT_TO_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterString(_initialText.missionTextLabel)
+            PushScaleformMovieMethodParameterString(_initialText.passFailTextLabel)
+            PushScaleformMovieMethodParameterString(_initialText.messageLabel)
+            PushScaleformMovieMethodParameterBool(true)
+            PushScaleformMovieMethodParameterBool(true)
+            PushScaleformMovieMethodParameterBool(true)
+            EndScaleformMovieMethod()
+
+            if _table[1] ~= nil then
+                BeginScaleformMovieMethod(scaleform_fg, "CREATE_STAT_TABLE")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(10)
+                EndScaleformMovieMethod()
+
+                for i, k in pairs(_table) do
+                    BeginScaleformMovieMethod(scaleform_fg, "ADD_STAT_TO_TABLE")
+                    PushScaleformMovieMethodParameterInt(1)
+                    PushScaleformMovieMethodParameterInt(10)
+                    PushScaleformMovieMethodParameterString(_table[i].stat)
+                    PushScaleformMovieMethodParameterString(_table[i].value)
+                    PushScaleformMovieMethodParameterBool(true)
+                    PushScaleformMovieMethodParameterBool(true)
+                    PushScaleformMovieMethodParameterBool(false)
+                    PushScaleformMovieMethodParameterBool(false)
+                    PushScaleformMovieMethodParameterInt(0)
+                    EndScaleformMovieMethod()
+                end
+
+                BeginScaleformMovieMethod(scaleform_fg, "ADD_STAT_TABLE_TO_WALL")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(10)
+                EndScaleformMovieMethod()
+            end
+
+            if _money.startMoney ~= _money.finishMoney then
+                BeginScaleformMovieMethod(scaleform_fg, "CREATE_INCREMENTAL_CASH_ANIMATION")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(20)
+                EndScaleformMovieMethod()
+
+                BeginScaleformMovieMethod(scaleform_fg, "ADD_INCREMENTAL_CASH_WON_STEP")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(20)
+                PushScaleformMovieMethodParameterInt(_money.startMoney)
+                PushScaleformMovieMethodParameterInt(_money.finishMoney)
+                PushScaleformMovieMethodParameterString(_money.topText)
+                PushScaleformMovieMethodParameterString(_money.bottomText)
+                PushScaleformMovieMethodParameterString(_money.rightHandStat)
+                PushScaleformMovieMethodParameterInt(_money.rightHandStatIcon)
+                PushScaleformMovieMethodParameterInt(0)
+                EndScaleformMovieMethod()
+
+                BeginScaleformMovieMethod(scaleform_fg, "ADD_INCREMENTAL_CASH_ANIMATION_TO_WALL")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(20)
+                EndScaleformMovieMethod()
+            end
+
+            if _xp.xpGained ~= 0 then
+                BeginScaleformMovieMethod(scaleform_fg, "ADD_REP_POINTS_AND_RANK_BAR_TO_WALL")
+                PushScaleformMovieMethodParameterInt(1)
+                PushScaleformMovieMethodParameterInt(_xp.xpGained)
+                PushScaleformMovieMethodParameterInt(_xp.xpBeforeGain)
+                PushScaleformMovieMethodParameterInt(_xp.minLevelXP)
+                PushScaleformMovieMethodParameterInt(_xp.maxLevelXP)
+                PushScaleformMovieMethodParameterInt(_xp.currentRank)
+                PushScaleformMovieMethodParameterInt(_xp.nextRank)
+                PushScaleformMovieMethodParameterString(_xp.rankTextSmall)
+                PushScaleformMovieMethodParameterString(_xp.rankTextBig)
+                EndScaleformMovieMethod()
+            end
+
+            BeginScaleformMovieMethod(scaleform_fg, "SHOW_STAT_WALL")
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            BeginScaleformMovieMethod(scaleform_fg, "createSequence")
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(1)
+            EndScaleformMovieMethod()
+
+            return scaleform, scaleform_bg, scaleform_fg
         end
-        local scale = drawHeist(ZinitialText, Ztable, Zmoney, Zxp)
-        StartScreenEffect("HeistCelebEnd")
+        local scale, scale_bg, scale_fg = drawHeist(ZinitialText, Ztable, Zmoney, Zxp)
+        --StartScreenEffect("HeistCelebEnd")
         while showHeistBanner do
             Citizen.Wait(1)
-            DrawRect(0.0, 0.0, 2.0, 2.0, 0, 44, 1, 160)
+            --DrawRect(0.0, 0.0, 2.0, 2.0, 0, 44, 1, 160)
+            DrawScaleformMovieFullscreenMasked(scale_bg, scale_fg, 255, 255, 255, 50)
             DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
-        StopScreenEffect("HeistCelebEnd")
+        --StopScreenEffect("HeistCelebEnd")
         StartScreenEffect("HeistCelebToast")
     end)
 end
