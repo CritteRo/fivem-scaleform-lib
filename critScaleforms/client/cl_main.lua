@@ -8,7 +8,7 @@ showMDone = false
 RegisterNetEvent("cS.HeistFinale")
 
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
-    lcaol showBanner = true
+    local showBanner = true
     local scale = 0
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
