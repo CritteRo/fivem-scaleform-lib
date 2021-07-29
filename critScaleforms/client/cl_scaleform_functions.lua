@@ -335,33 +335,30 @@ end
 function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
     Citizen.CreateThread(function()
         function drawHeist(_initialText, _table, _money, _xp)
-            local scaleform = RequestScaleformMovie("HEIST2_CELEBRATION")
+            local scaleform = RequestScaleformMovie("HEIST_CELEBRATION")
             while not HasScaleformMovieLoaded(scaleform) do
                 Citizen.Wait(0)
             end
 
-            local scaleform_bg = RequestScaleformMovie("HEIST2_CELEBRATION_BG")
+            local scaleform_bg = RequestScaleformMovie("HEIST_CELEBRATION_BG")
             while not HasScaleformMovieLoaded(scaleform_bg) do
                 Citizen.Wait(0)
             end
 
-            local scaleform_fg = RequestScaleformMovie("HEIST2_CELEBRATION_FG")
+            local scaleform_fg = RequestScaleformMovie("HEIST_CELEBRATION_FG")
             while not HasScaleformMovieLoaded(scaleform_fg) do
                 Citizen.Wait(0)
             end
 
             BeginScaleformMovieMethod(scaleform, "CREATE_STAT_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(6)
+            PushScaleformMovieMethodParameterString("HUD_COLOUR_FREEMODE_DARK")
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
             BeginScaleformMovieMethod(scaleform, "ADD_BACKGROUND_TO_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(200)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
+            PushScaleformMovieMethodParameterInt(100)
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
@@ -463,7 +460,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
 
             BeginScaleformMovieMethod(scaleform_bg, "CREATE_STAT_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(6)
+            PushScaleformMovieMethodParameterString("HUD_COLOUR_FREEMODE_DARK")
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
@@ -561,7 +558,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
 
             BeginScaleformMovieMethod(scaleform_fg, "CREATE_STAT_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(6)
+            PushScaleformMovieMethodParameterString("HUD_COLOUR_FREEMODE_DARK")
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
