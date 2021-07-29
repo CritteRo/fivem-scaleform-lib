@@ -202,47 +202,27 @@ function showPopupWarning(_title, _subtitle, _errorCode)
     end) 
 end
 
-function showCountdown(maxNumber, _r, _g, _b)
-    local nr = maxNumber
-    local scale = 0
-    Citizen.CreateThread(function()
-        function drawCountdown(string1, r, g, b)
-            local scaleform = RequestScaleformMovie("COUNTDOWN")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
-            BeginScaleformMovieMethod(scaleform, "SET_MESSAGE")
-            PushScaleformMovieMethodParameterString(string1)
-            PushScaleformMovieMethodParameterInt(r)
-            PushScaleformMovieMethodParameterInt(g)
-            PushScaleformMovieMethodParameterInt(b)
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()
+function showCountdown(_number, _r, _g, _b)
+    local scaleform = RequestScaleformMovie("COUNTDOWN")
+    while not HasScaleformMovieLoaded(scaleform) do
+        Citizen.Wait(0)
+    end
+    BeginScaleformMovieMethod(scaleform, "SET_MESSAGE")
+    PushScaleformMovieMethodParameterString(_number)
+    PushScaleformMovieMethodParameterInt(r)
+    PushScaleformMovieMethodParameterInt(g)
+    PushScaleformMovieMethodParameterInt(b)
+    PushScaleformMovieMethodParameterBool(true)
+    EndScaleformMovieMethod()
 
-            BeginScaleformMovieMethod(scaleform, "FADE_MP")
-            PushScaleformMovieMethodParameterString(string1)
-            PushScaleformMovieMethodParameterInt(r)
-            PushScaleformMovieMethodParameterInt(g)
-            PushScaleformMovieMethodParameterInt(b)
-            EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(scaleform, "FADE_MP")
+    PushScaleformMovieMethodParameterString(_number)
+    PushScaleformMovieMethodParameterInt(r)
+    PushScaleformMovieMethodParameterInt(g)
+    PushScaleformMovieMethodParameterInt(b)
+    EndScaleformMovieMethod()
 
-            return scaleform
-        end
-        scale = drawCountdown(nr, _r, _g, _b)
-        while showCD do
-            Citizen.Wait(1)
-            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
-        end
-    end)
-    Citizen.CreateThread(function()
-        while showCD do
-            Citizen.Wait(1000)
-            if nr >= 1 then
-                nr = nr - 1
-                scale = drawCountdown(nr, _r, _g, _b)
-            end
-        end
-    end)
+    return scaleform
 end
 
 function showMidsizeBanner(_title, _subtitle)

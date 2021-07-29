@@ -96,13 +96,31 @@ end)
 
 AddEventHandler("cS.Countdown", function(_r, _g, _b, _waitTime, _playSound)
     showCD = true
+    local time = _waitTime
+    local scale = 0
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    showCountdown(_waitTime, _r, _g, _b)
+    scale = showCountdown(time, _r, _g, _b)
     Citizen.CreateThread(function()
-        Citizen.Wait(tonumber(_waitTime) * 1000)
-        showCD = false
+        while showCD do
+            Citizen.Wait(1000)
+            if time > 1 then
+                time = time - 1
+                scale = showCountdown(time, _r, _g, _b)
+            elseif time == 1 then
+                time = time - 1
+                scale = showCountdown("GO", _r, _g, _b)
+            else
+                showCD = false
+            end
+        end
+    end)
+    Citizen.CreateThread(function()
+        while showCD do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
     end)
 end)
 
