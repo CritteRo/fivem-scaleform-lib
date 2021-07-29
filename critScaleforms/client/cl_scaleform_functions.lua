@@ -209,17 +209,17 @@ function showCountdown(_number, _r, _g, _b)
     end
     BeginScaleformMovieMethod(scaleform, "SET_MESSAGE")
     PushScaleformMovieMethodParameterString(_number)
-    PushScaleformMovieMethodParameterInt(r)
-    PushScaleformMovieMethodParameterInt(g)
-    PushScaleformMovieMethodParameterInt(b)
+    PushScaleformMovieMethodParameterInt(_r)
+    PushScaleformMovieMethodParameterInt(_g)
+    PushScaleformMovieMethodParameterInt(_b)
     PushScaleformMovieMethodParameterBool(true)
     EndScaleformMovieMethod()
 
     BeginScaleformMovieMethod(scaleform, "FADE_MP")
     PushScaleformMovieMethodParameterString(_number)
-    PushScaleformMovieMethodParameterInt(r)
-    PushScaleformMovieMethodParameterInt(g)
-    PushScaleformMovieMethodParameterInt(b)
+    PushScaleformMovieMethodParameterInt(_r)
+    PushScaleformMovieMethodParameterInt(_g)
+    PushScaleformMovieMethodParameterInt(_b)
     EndScaleformMovieMethod()
 
     return scaleform
