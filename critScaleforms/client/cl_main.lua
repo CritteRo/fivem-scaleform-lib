@@ -122,15 +122,28 @@ AddEventHandler("cS.Countdown", function(_r, _g, _b, _waitTime, _playSound)
     end)
 end)
 
-AddEventHandler("cS.MidsizeBanner", function(_title, subtitle, _waitTime, _playSound)
-    showMidBanner = true
+AddEventHandler("cS.MidsizeBanner", function(_title, subtitle, _bannerColor, _waitTime, _playSound)
+    local showMidBanner = true
+    local scale = 0
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    showMidsizeBanner(_title, subtitle)
+    scale = showMidsizeBanner(_title, subtitle, _bannerColor)
     Citizen.CreateThread(function()
-        Citizen.Wait(tonumber(_waitTime) * 1000)
+        Citizen.Wait((_waitTime * 1000) - 1000)
+        BeginScaleformMovieMethod(scale, "SHARD_ANIM_OUT")
+        PushScaleformMovieMethodParameterInt(2)
+        PushScaleformMovieMethodParameterFloat(0.3)
+        PushScaleformMovieMethodParameterBool(true)
+        EndScaleformMovieMethod()
+        Citizen.Wait(1000)
         showMidBanner = false
+    end)
+    Citizen.CreateThread(function()
+        while showMidBanner do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
     end)
 end)
 

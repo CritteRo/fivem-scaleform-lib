@@ -225,28 +225,19 @@ function showCountdown(_number, _r, _g, _b)
     return scaleform
 end
 
-function showMidsizeBanner(_title, _subtitle)
-    Citizen.CreateThread(function()
-        function drawScale(string1, string2)
-            local scaleform = RequestScaleformMovie("MIDSIZED_MESSAGE")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
+function showMidsizeBanner(_title, _subtitle, _bannerColor)
+    local scaleform = RequestScaleformMovie("MIDSIZED_MESSAGE")
+    while not HasScaleformMovieLoaded(scaleform) do
+        Citizen.Wait(0)
+    end
 
-            BeginScaleformMovieMethod(scaleform, "SHOW_COND_SHARD_MESSAGE")
-            PushScaleformMovieMethodParameterString(string1)
-            PushScaleformMovieMethodParameterString(string2)
-            PushScaleformMovieMethodParameterInt(2)
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()
-            return scaleform
-        end
-        local scale = drawScale(_title, _subtitle)
-        while showMidBanner do
-            Citizen.Wait(1)
-            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
-        end
-    end)
+    BeginScaleformMovieMethod(scaleform, "SHOW_COND_SHARD_MESSAGE")
+    PushScaleformMovieMethodParameterString(_title)
+    PushScaleformMovieMethodParameterString(_subtitle)
+    PushScaleformMovieMethodParameterInt(_bannerColor)
+    PushScaleformMovieMethodParameterBool(true)
+    EndScaleformMovieMethod()
+    return scaleform
 end
 
 function showCredits(_role, _name, _x, _y)

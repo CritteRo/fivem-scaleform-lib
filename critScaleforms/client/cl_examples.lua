@@ -25,7 +25,7 @@ end)
 
 RegisterCommand('me', function() --midsize banner. Same as big banner, but midsized.
     --TriggerEvent("cS.MidsizeBanner", _title, _subtitle, _waitTimeSeconds, _playShound)
-    TriggerEvent("cS.MidsizeBanner", "~y~Test Scaleform~s~.", "You ~g~can ~r~use ~y~colors ~b~here ~s~too.", 5, true)
+    TriggerEvent("cS.MidsizeBanner", "~y~Test Scaleform~s~.", "You ~g~can ~r~use ~y~colors ~b~here ~s~too.", 2, 9, true)
 end)
 
 RegisterCommand('rp', function() --Results panel. _slots argument needs to be a table. slots[i].state can be 0 or 2 for "not selected" and 1 or 3 for "selected".
