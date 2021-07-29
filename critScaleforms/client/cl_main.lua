@@ -1,16 +1,14 @@
-showBanner = false
 showMQ = false
 showRP = false
 showMI = false
 showST = false
 showPW = false
-showCD = false
 showMDone = false
 
 RegisterNetEvent("cS.HeistFinale")
 
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
-    showBanner = true
+    lcaol showBanner = true
     local scale = 0
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
@@ -95,7 +93,7 @@ AddEventHandler("cS.PopupWarning", function(_title, _subtitle, _errorCode, _wait
 end)
 
 AddEventHandler("cS.Countdown", function(_r, _g, _b, _waitTime, _playSound)
-    showCD = true
+    local showCD = true
     local time = _waitTime
     local scale = 0
     if _playSound ~= nil and _playSound == true then
