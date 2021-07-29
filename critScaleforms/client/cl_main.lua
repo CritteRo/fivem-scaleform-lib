@@ -45,14 +45,21 @@ AddEventHandler("cS.missionQuit", function(_title, _subtitle, _waitTime, _playSo
 end)
 
 AddEventHandler("cS.resultsPanel", function(_title, _subtitle, _slots, _waitTime, _playSound)
-    showRP = true
+    local showRP = true
+    local scale = 0
     if _playSound ~= nil and _playSound == true then
         PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
     end
-    ShowResultsPanel(_title, _subtitle, _slots)
+    scale = ShowResultsPanel(_title, _subtitle, _slots)
     Citizen.CreateThread(function()
         Citizen.Wait(tonumber(_waitTime) * 1000)
         showRP = false
+    end)
+    Citizen.CreateThread(function()
+        while showRP do
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+            Citizen.Wait(1)
+        end
     end)
 end)
 

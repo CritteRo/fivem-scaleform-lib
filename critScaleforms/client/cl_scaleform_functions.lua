@@ -75,35 +75,26 @@ function ShowSplashText(_text1, _fadeout)
 end
 
 function ShowResultsPanel(_title, _subtitle, _slots)
-    Citizen.CreateThread(function()
-        function drawPanel(title, subtitle, slot)
-            local scaleform = RequestScaleformMovie("MP_RESULTS_PANEL")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
-            BeginScaleformMovieMethod(scaleform, "SET_TITLE")
-            PushScaleformMovieMethodParameterString(title)
-            EndScaleformMovieMethod()
+    local scaleform = RequestScaleformMovie("MP_RESULTS_PANEL")
+    while not HasScaleformMovieLoaded(scaleform) do
+        Citizen.Wait(0)
+    end
+    BeginScaleformMovieMethod(scaleform, "SET_TITLE")
+    PushScaleformMovieMethodParameterString(_title)
+    EndScaleformMovieMethod()
 
-            BeginScaleformMovieMethod(scaleform, "SET_SUBTITLE")
-            PushScaleformMovieMethodParameterString(subtitle)
-            EndScaleformMovieMethod()
+    BeginScaleformMovieMethod(scaleform, "SET_SUBTITLE")
+    PushScaleformMovieMethodParameterString(_subtitle)
+    EndScaleformMovieMethod()
 
-            for i, k in ipairs(slot) do
-                BeginScaleformMovieMethod(scaleform, "SET_SLOT")
-                PushScaleformMovieMethodParameterInt(i)
-                PushScaleformMovieMethodParameterInt(slot[i].state)
-                PushScaleformMovieMethodParameterString(slot[i].name)
-                EndScaleformMovieMethod()
-            end
-            return scaleform
-        end
-        local scale = drawPanel(_title, _subtitle, _slots)
-        while showRP do
-            Citizen.Wait(1)
-            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
-        end
-    end)
+    for i, k in ipairs(_slots) do
+        BeginScaleformMovieMethod(scaleform, "SET_SLOT")
+        PushScaleformMovieMethodParameterInt(i)
+        PushScaleformMovieMethodParameterInt(_slots[i].state)
+        PushScaleformMovieMethodParameterString(_slots[i].name)
+        EndScaleformMovieMethod()
+    end
+    return scaleform
 end
 
 function ShowMissionInfoPanel(_data, _x, _y, _width)
