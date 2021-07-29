@@ -358,7 +358,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
 
             BeginScaleformMovieMethod(scaleform, "ADD_BACKGROUND_TO_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(100)
+            PushScaleformMovieMethodParameterInt(80)
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
@@ -466,7 +466,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
 
             BeginScaleformMovieMethod(scaleform_bg, "ADD_BACKGROUND_TO_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(100)
+            PushScaleformMovieMethodParameterInt(80)
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
@@ -564,7 +564,7 @@ function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
 
             BeginScaleformMovieMethod(scaleform_fg, "ADD_BACKGROUND_TO_WALL")
             PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(100)
+            PushScaleformMovieMethodParameterInt(80)
             PushScaleformMovieMethodParameterInt(1)
             EndScaleformMovieMethod()
 
