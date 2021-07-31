@@ -11,58 +11,23 @@ scalformTimer = {
 
 
 function ShowBanner(_text1, _text2)
-    local scaleform = RequestScaleformMovie("mp_big_message_freemode")
-    while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(1)
-    end
+    local scaleform = Scaleform.Request('MP_BIG_MESSAGE_FREEMODE')
 
-    BeginScaleformMovieMethod(scaleform, "SHOW_SHARD_CENTERED_MP_MESSAGE")
-    EndScaleformMovieMethod()
+    Scaleform.CallFunction(scaleform, false, "SHOW_SHARD_CENTERED_MP_MESSAGE")
+    Scaleform.CallFunction(scaleform, false, "SHARD_SET_TEXT", _text1, _text2, 0)
 
-    BeginScaleformMovieMethod(scaleform, "SHARD_SET_TEXT")
-    PushScaleformMovieMethodParameterString(_text1)
-    PushScaleformMovieMethodParameterString(_text2)
-    PushScaleformMovieMethodParameterInt(0)
-    EndScaleformMovieMethod()
     return scaleform
 end
 
 function ShowSplashText(_text1, _fadeout)
     Citizen.CreateThread(function()
         function drackSplashText(text1, fade)
-            local scaleform = RequestScaleformMovie("SPLASH_TEXT")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
+            local scaleform = Scaleform.Request('SPLASH_TEXT')
 
-            BeginScaleformMovieMethod(scaleform, "SET_SPLASH_TEXT")
-            PushScaleformMovieMethodParameterString(text1)
-            PushScaleformMovieMethodParameterInt(5000)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform, "SPLASH_TEXT_LABEL")
-            PushScaleformMovieMethodParameterString(text1)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform, "SPLASH_TEXT_COLOR")
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            PushScaleformMovieMethodParameterInt(255)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform, "SPLASH_TEXT_TRANSITION_OUT")
-            PushScaleformMovieMethodParameterInt(fade)
-            PushScaleformMovieMethodParameterInt(0)
-            EndScaleformMovieMethod()
+            Scaleform.CallFunction(scaleform, false, "SET_SPLASH_TEXT", text1, 5000, 255, 255, 255, 255)
+            Scaleform.CallFunction(scaleform, false, "SPLASH_TEXT_LABEL", text1, 255, 255, 255, 255)
+            Scaleform.CallFunction(scaleform, false, "SPLASH_TEXT_COLOR", 255, 255, 255, 255)
+            Scaleform.CallFunction(scaleform, false, "SPLASH_TEXT_TRANSITION_OUT", fade, 0)
 
             return scaleform
         end
@@ -75,24 +40,13 @@ function ShowSplashText(_text1, _fadeout)
 end
 
 function ShowResultsPanel(_title, _subtitle, _slots)
-    local scaleform = RequestScaleformMovie("MP_RESULTS_PANEL")
-    while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(0)
-    end
-    BeginScaleformMovieMethod(scaleform, "SET_TITLE")
-    PushScaleformMovieMethodParameterString(_title)
-    EndScaleformMovieMethod()
+    local scaleform = Scaleform.Request('MP_RESULTS_PANEL')
 
-    BeginScaleformMovieMethod(scaleform, "SET_SUBTITLE")
-    PushScaleformMovieMethodParameterString(_subtitle)
-    EndScaleformMovieMethod()
+    Scaleform.CallFunction(scaleform, false, "SET_TITLE", _title)
+    Scaleform.CallFunction(scaleform, false, "SET_SUBTITLE", _subtitle)
 
     for i, k in ipairs(_slots) do
-        BeginScaleformMovieMethod(scaleform, "SET_SLOT")
-        PushScaleformMovieMethodParameterInt(i)
-        PushScaleformMovieMethodParameterInt(_slots[i].state)
-        PushScaleformMovieMethodParameterString(_slots[i].name)
-        EndScaleformMovieMethod()
+        Scaleform.CallFunction(scaleform, false, "SET_SLOT", i, _slots[i].state, _slots[i].name)
     end
     return scaleform
 end
@@ -100,22 +54,9 @@ end
 function ShowMissionInfoPanel(_data, _x, _y, _width)
     Citizen.CreateThread(function()
         function drawMissionInfo(data)
-            local scaleform = RequestScaleformMovie("MP_MISSION_NAME_FREEMODE")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
-            BeginScaleformMovieMethod(scaleform, "SET_MISSION_INFO")
-            PushScaleformMovieMethodParameterString(data.name)
-            PushScaleformMovieMethodParameterString(data.type)
-            PushScaleformMovieMethodParameterString("")
-            PushScaleformMovieMethodParameterString(data.percentage)
-            PushScaleformMovieMethodParameterString("")
-            PushScaleformMovieMethodParameterBool(data.rockstarVerified)
-            PushScaleformMovieMethodParameterString(data.playersRequired)
-            PushScaleformMovieMethodParameterInt(data.rp)
-            PushScaleformMovieMethodParameterInt(data.cash)
-            PushScaleformMovieMethodParameterString(data.time)
-            EndScaleformMovieMethod()
+            local scaleform = Scaleform.Request('MP_MISSION_NAME_FREEMODE')
+
+            Scaleform.CallFunction(scaleform, false, "SET_MISSION_INFO", data.name, data.type, "", data.percentage, "", data.rockstarVerified, data.playersRequired, data.rp, data.cash, data.time)
 
             return scaleform
         end
@@ -133,28 +74,13 @@ end
 
 function showMissionQuit(_title, _subtitle, _duration)
     Citizen.CreateThread(function()
-        function drawScale(string1, string2, duration)
-            local scaleform = RequestScaleformMovie("mission_quit")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
+        function drawScale(title, subtitle, duration)
+            local scaleform = Scaleform.Request('MISSION_QUIT')
 
-            BeginScaleformMovieMethod(scaleform, "SET_TEXT")
-            PushScaleformMovieMethodParameterString(string1)
-            PushScaleformMovieMethodParameterString(string2)
-            EndScaleformMovieMethod()
+            Scaleform.CallFunction(scaleform, false, "SET_TEXT", title, subtitle)
+            Scaleform.CallFunction(scaleform, false, "TRANSITION_IN", 0)
+            Scaleform.CallFunction(scaleform, false, "TRANSITION_OUT", 3000)
 
-            --[[BeginScaleformMovieMethod(scaleform, "TRANSITION_IN")
-            PushScaleformMovieMethodParameterInt(1000)
-            EndScaleformMovieMethod()
-            --== "TRANSITION_OUT" CAUSES THE SCALEFORM TO NOT RUN A SECOND TIME. ==--
-            BeginScaleformMovieMethod(scaleform, "TRANSITION_OUT")
-            if duration > 4000 then
-                PushScaleformMovieMethodParameterInt(duration - 1000)
-            else
-                PushScaleformMovieMethodParameterInt(3000)
-            end
-            EndScaleformMovieMethod()]]
             return scaleform
         end
         
@@ -168,24 +94,14 @@ end
 
 function showPopupWarning(_title, _subtitle, _errorCode)
     Citizen.CreateThread(function()
-        function drawPopup(title, subtitle, alertType)
-            local scaleform = RequestScaleformMovie("POPUP_WARNING")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
-            PushScaleformMovieFunction(scaleform, "SHOW_POPUP_WARNING")
-            PushScaleformMovieFunctionParameterFloat(500.0)
-            PushScaleformMovieFunctionParameterString(title)
-            PushScaleformMovieFunctionParameterString(subtitle)
-            PushScaleformMovieFunctionParameterString("")
-            PushScaleformMovieFunctionParameterBool(true)
-            PushScaleformMovieFunctionParameterInt(alertType)
-            PushScaleformMovieFunctionParameterString(_errorCode)
-            PopScaleformMovieFunctionVoid()
+        function drawPopup(title, subtitle, errorCode)
+            local scaleform = Scaleform.Request('POPUP_WARNING')
+
+            Scaleform.CallFunction(scaleform, false, "SHOW_POPUP_WARNING", 500.0, title, subtitle, "", true, 0, _errorCode)
 
             return scaleform
         end
-        local scale = drawPopup(_title, _subtitle, _alertType)
+        local scale = drawPopup(_title, _subtitle, _errorCode)
         while showPW do
             Citizen.Wait(1)
             DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255, 0)
@@ -194,40 +110,19 @@ function showPopupWarning(_title, _subtitle, _errorCode)
 end
 
 function showCountdown(_number, _r, _g, _b)
-    local scaleform = RequestScaleformMovie("COUNTDOWN")
-    while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(0)
-    end
-    BeginScaleformMovieMethod(scaleform, "SET_MESSAGE")
-    PushScaleformMovieMethodParameterString(_number)
-    PushScaleformMovieMethodParameterInt(_r)
-    PushScaleformMovieMethodParameterInt(_g)
-    PushScaleformMovieMethodParameterInt(_b)
-    PushScaleformMovieMethodParameterBool(true)
-    EndScaleformMovieMethod()
+    local scaleform = Scaleform.Request('COUNTDOWN')
 
-    BeginScaleformMovieMethod(scaleform, "FADE_MP")
-    PushScaleformMovieMethodParameterString(_number)
-    PushScaleformMovieMethodParameterInt(_r)
-    PushScaleformMovieMethodParameterInt(_g)
-    PushScaleformMovieMethodParameterInt(_b)
-    EndScaleformMovieMethod()
+    Scaleform.CallFunction(scaleform, false, "SET_MESSAGE", _number, _r, _g, _b, true)
+    Scaleform.CallFunction(scaleform, false, "FADE_MP", _number, _r, _g, _b)
 
     return scaleform
 end
 
 function showMidsizeBanner(_title, _subtitle, _bannerColor)
-    local scaleform = RequestScaleformMovie("MIDSIZED_MESSAGE")
-    while not HasScaleformMovieLoaded(scaleform) do
-        Citizen.Wait(0)
-    end
+    local scaleform = Scaleform.Request('MIDSIZED_MESSAGE')
 
-    BeginScaleformMovieMethod(scaleform, "SHOW_COND_SHARD_MESSAGE")
-    PushScaleformMovieMethodParameterString(_title)
-    PushScaleformMovieMethodParameterString(_subtitle)
-    PushScaleformMovieMethodParameterInt(_bannerColor)
-    PushScaleformMovieMethodParameterBool(true)
-    EndScaleformMovieMethod()
+    Scaleform.CallFunction(scaleform, false, "SHOW_COND_SHARD_MESSAGE", _title, _subtitle, _bannerColor, true)
+
     return scaleform
 end
 
@@ -330,339 +225,62 @@ function showCredits(_role, _name, _x, _y)
             DrawScaleformMovie(scale, _x, _y, 0.71, 0.68, 255, 255, 255, 255)
         end
     end)
-end
+end --NEED TO BE REWORKED
 
 function showHeist(ZinitialText, Ztable, Zmoney, Zxp)
     Citizen.CreateThread(function()
         function drawHeist(_initialText, _table, _money, _xp)
-            local scaleform = RequestScaleformMovie("HEIST_CELEBRATION")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
+            local scaleform = Scaleform.Request('HEIST_CELEBRATION')
+            local scaleform_bg = Scaleform.Request('HEIST_CELEBRATION_BG')
+            local scaleform_fg = Scaleform.Request('HEIST_CELEBRATION_FG')
 
-            local scaleform_bg = RequestScaleformMovie("HEIST_CELEBRATION_BG")
-            while not HasScaleformMovieLoaded(scaleform_bg) do
-                Citizen.Wait(0)
-            end
+            local scaleform_list = {
+                scaleform,
+                scaleform_bg,
+                scaleform_fg
+            }
 
-            local scaleform_fg = RequestScaleformMovie("HEIST_CELEBRATION_FG")
-            while not HasScaleformMovieLoaded(scaleform_fg) do
-                Citizen.Wait(0)
-            end
-
-            BeginScaleformMovieMethod(scaleform, "CREATE_STAT_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString("HUD_COLOUR_FREEMODE_DARK")
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform, "ADD_BACKGROUND_TO_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(80)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            --[[BeginScaleformMovieMethod(scaleform, "ADD_COMPLETE_MESSAGE_TO_WALL") --this should be used as it's own scaleform event.
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString(_initialText.missionTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.passFailTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.messageLabel)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()]]
-
-            BeginScaleformMovieMethod(scaleform, "ADD_MISSION_RESULT_TO_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString(_initialText.missionTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.passFailTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.messageLabel)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()
-
-            if _table[1] ~= nil then
-                BeginScaleformMovieMethod(scaleform, "CREATE_STAT_TABLE")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(10)
-                EndScaleformMovieMethod()
-
-                for i, k in pairs(_table) do
-                    BeginScaleformMovieMethod(scaleform, "ADD_STAT_TO_TABLE")
-                    PushScaleformMovieMethodParameterInt(1)
-                    PushScaleformMovieMethodParameterInt(10)
-                    PushScaleformMovieMethodParameterString(_table[i].stat)
-                    PushScaleformMovieMethodParameterString(_table[i].value)
-                    PushScaleformMovieMethodParameterBool(true)
-                    PushScaleformMovieMethodParameterBool(true)
-                    PushScaleformMovieMethodParameterBool(false)
-                    PushScaleformMovieMethodParameterBool(false)
-                    PushScaleformMovieMethodParameterInt(0)
-                    EndScaleformMovieMethod()
+            for key, scaleform_handle in pairs(scaleform_list) do
+                Scaleform.CallFunction(scaleform_handle, false, "CREATE_STAT_WALL", 1, "HUD_COLOUR_FREEMODE_DARK", 1)
+                Scaleform.CallFunction(scaleform_handle, false, "ADD_BACKGROUND_TO_WALL", 1, 80, 1)
+    
+                --this should be used as it's own scaleform event.
+                --Scaleform.CallFunction(scaleform_handle, false, "ADD_COMPLETE_MESSAGE_TO_WALL", 1, _initialText.missionTextLabel, _initialText.passFailTextLabel, _initialText.messageLabel, true, true, true)
+    
+                Scaleform.CallFunction(scaleform_handle, false, "ADD_MISSION_RESULT_TO_WALL", 1, _initialText.missionTextLabel, _initialText.passFailTextLabel, _initialText.messageLabel, true, true, true)
+    
+                if _table[1] ~= nil then
+                    Scaleform.CallFunction(scaleform_handle, false, "CREATE_STAT_TABLE", 1, 10)
+    
+                    for i, k in pairs(_table) do
+                        Scaleform.CallFunction(scaleform_handle, false, "ADD_STAT_TO_TABLE", 1, 10, _table[i].stat, _table[i].value, true, true, false, false, 0)
+                    end
+    
+                    Scaleform.CallFunction(scaleform_handle, false, "ADD_STAT_TABLE_TO_WALL", 1, 10)
                 end
-
-                BeginScaleformMovieMethod(scaleform, "ADD_STAT_TABLE_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(10)
-                EndScaleformMovieMethod()
-            end
-
-            if _money.startMoney ~= _money.finishMoney then
-                BeginScaleformMovieMethod(scaleform, "CREATE_INCREMENTAL_CASH_ANIMATION")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                EndScaleformMovieMethod()
-
-                BeginScaleformMovieMethod(scaleform, "ADD_INCREMENTAL_CASH_WON_STEP")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                PushScaleformMovieMethodParameterInt(_money.startMoney)
-                PushScaleformMovieMethodParameterInt(_money.finishMoney)
-                PushScaleformMovieMethodParameterString(_money.topText)
-                PushScaleformMovieMethodParameterString(_money.bottomText)
-                PushScaleformMovieMethodParameterString(_money.rightHandStat)
-                PushScaleformMovieMethodParameterInt(_money.rightHandStatIcon)
-                PushScaleformMovieMethodParameterInt(0)
-                EndScaleformMovieMethod()
-
-                BeginScaleformMovieMethod(scaleform, "ADD_INCREMENTAL_CASH_ANIMATION_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                EndScaleformMovieMethod()
-            end
-
-            if _xp.xpGained ~= 0 then
-                BeginScaleformMovieMethod(scaleform, "ADD_REP_POINTS_AND_RANK_BAR_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(_xp.xpGained)
-                PushScaleformMovieMethodParameterInt(_xp.xpBeforeGain)
-                PushScaleformMovieMethodParameterInt(_xp.minLevelXP)
-                PushScaleformMovieMethodParameterInt(_xp.maxLevelXP)
-                PushScaleformMovieMethodParameterInt(_xp.currentRank)
-                PushScaleformMovieMethodParameterInt(_xp.nextRank)
-                PushScaleformMovieMethodParameterString(_xp.rankTextSmall)
-                PushScaleformMovieMethodParameterString(_xp.rankTextBig)
-                EndScaleformMovieMethod()
-            end
-
-            BeginScaleformMovieMethod(scaleform, "SHOW_STAT_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform, "createSequence")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            --BG
-
-            BeginScaleformMovieMethod(scaleform_bg, "CREATE_STAT_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString("HUD_COLOUR_FREEMODE_DARK")
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform_bg, "ADD_BACKGROUND_TO_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(80)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform_bg, "ADD_MISSION_RESULT_TO_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString(_initialText.missionTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.passFailTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.messageLabel)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()
-
-            if _table[1] ~= nil then
-                BeginScaleformMovieMethod(scaleform_bg, "CREATE_STAT_TABLE")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(10)
-                EndScaleformMovieMethod()
-
-                for i, k in pairs(_table) do
-                    BeginScaleformMovieMethod(scaleform_bg, "ADD_STAT_TO_TABLE")
-                    PushScaleformMovieMethodParameterInt(1)
-                    PushScaleformMovieMethodParameterInt(10)
-                    PushScaleformMovieMethodParameterString(_table[i].stat)
-                    PushScaleformMovieMethodParameterString(_table[i].value)
-                    PushScaleformMovieMethodParameterBool(true)
-                    PushScaleformMovieMethodParameterBool(true)
-                    PushScaleformMovieMethodParameterBool(false)
-                    PushScaleformMovieMethodParameterBool(false)
-                    PushScaleformMovieMethodParameterInt(0)
-                    EndScaleformMovieMethod()
+    
+                if _money.startMoney ~= _money.finishMoney then
+                    Scaleform.CallFunction(scaleform_handle, false, "CREATE_INCREMENTAL_CASH_ANIMATION", 1, 20)
+                    Scaleform.CallFunction(scaleform_handle, false, "ADD_INCREMENTAL_CASH_WON_STEP", 1, 20, _money.startMoney, _money.finishMoney, _money.topText, _money.bottomText, _money.rightHandStat, _money.rightHandStatIcon, 0)
+                    Scaleform.CallFunction(scaleform_handle, false, "ADD_INCREMENTAL_CASH_ANIMATION_TO_WALL", 1, 20)
                 end
-
-                BeginScaleformMovieMethod(scaleform_bg, "ADD_STAT_TABLE_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(10)
-                EndScaleformMovieMethod()
-            end
-
-            if _money.startMoney ~= _money.finishMoney then
-                BeginScaleformMovieMethod(scaleform_bg, "CREATE_INCREMENTAL_CASH_ANIMATION")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                EndScaleformMovieMethod()
-
-                BeginScaleformMovieMethod(scaleform_bg, "ADD_INCREMENTAL_CASH_WON_STEP")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                PushScaleformMovieMethodParameterInt(_money.startMoney)
-                PushScaleformMovieMethodParameterInt(_money.finishMoney)
-                PushScaleformMovieMethodParameterString(_money.topText)
-                PushScaleformMovieMethodParameterString(_money.bottomText)
-                PushScaleformMovieMethodParameterString(_money.rightHandStat)
-                PushScaleformMovieMethodParameterInt(_money.rightHandStatIcon)
-                PushScaleformMovieMethodParameterInt(0)
-                EndScaleformMovieMethod()
-
-                BeginScaleformMovieMethod(scaleform_bg, "ADD_INCREMENTAL_CASH_ANIMATION_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                EndScaleformMovieMethod()
-            end
-
-            if _xp.xpGained ~= 0 then
-                BeginScaleformMovieMethod(scaleform_bg, "ADD_REP_POINTS_AND_RANK_BAR_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(_xp.xpGained)
-                PushScaleformMovieMethodParameterInt(_xp.xpBeforeGain)
-                PushScaleformMovieMethodParameterInt(_xp.minLevelXP)
-                PushScaleformMovieMethodParameterInt(_xp.maxLevelXP)
-                PushScaleformMovieMethodParameterInt(_xp.currentRank)
-                PushScaleformMovieMethodParameterInt(_xp.nextRank)
-                PushScaleformMovieMethodParameterString(_xp.rankTextSmall)
-                PushScaleformMovieMethodParameterString(_xp.rankTextBig)
-                EndScaleformMovieMethod()
-            end
-
-            BeginScaleformMovieMethod(scaleform_bg, "SHOW_STAT_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform_bg, "createSequence")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            --FG
-
-            BeginScaleformMovieMethod(scaleform_fg, "CREATE_STAT_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString("HUD_COLOUR_FREEMODE_DARK")
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform_fg, "ADD_BACKGROUND_TO_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(80)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform_fg, "ADD_MISSION_RESULT_TO_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString(_initialText.missionTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.passFailTextLabel)
-            PushScaleformMovieMethodParameterString(_initialText.messageLabel)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()
-
-            if _table[1] ~= nil then
-                BeginScaleformMovieMethod(scaleform_fg, "CREATE_STAT_TABLE")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(10)
-                EndScaleformMovieMethod()
-
-                for i, k in pairs(_table) do
-                    BeginScaleformMovieMethod(scaleform_fg, "ADD_STAT_TO_TABLE")
-                    PushScaleformMovieMethodParameterInt(1)
-                    PushScaleformMovieMethodParameterInt(10)
-                    PushScaleformMovieMethodParameterString(_table[i].stat)
-                    PushScaleformMovieMethodParameterString(_table[i].value)
-                    PushScaleformMovieMethodParameterBool(true)
-                    PushScaleformMovieMethodParameterBool(true)
-                    PushScaleformMovieMethodParameterBool(false)
-                    PushScaleformMovieMethodParameterBool(false)
-                    PushScaleformMovieMethodParameterInt(0)
-                    EndScaleformMovieMethod()
+    
+                if _xp.xpGained ~= 0 then
+                    Scaleform.CallFunction(scaleform_handle, false, "ADD_REP_POINTS_AND_RANK_BAR_TO_WALL", 1, _xp.xpGained, _xp.xpBeforeGain, _xp.minLevelXP, _xp.maxLevelXP, _xp.currentRank, _xp.nextRank, _xp.rankTextSmall, _xp.rankTextBig)
                 end
-
-                BeginScaleformMovieMethod(scaleform_fg, "ADD_STAT_TABLE_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(10)
-                EndScaleformMovieMethod()
+    
+                Scaleform.CallFunction(scaleform_handle, false, "SHOW_STAT_WALL", 1)
+                Scaleform.CallFunction(scaleform_handle, false, "createSequence", 1, 1, 1)
             end
-
-            if _money.startMoney ~= _money.finishMoney then
-                BeginScaleformMovieMethod(scaleform_fg, "CREATE_INCREMENTAL_CASH_ANIMATION")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                EndScaleformMovieMethod()
-
-                BeginScaleformMovieMethod(scaleform_fg, "ADD_INCREMENTAL_CASH_WON_STEP")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                PushScaleformMovieMethodParameterInt(_money.startMoney)
-                PushScaleformMovieMethodParameterInt(_money.finishMoney)
-                PushScaleformMovieMethodParameterString(_money.topText)
-                PushScaleformMovieMethodParameterString(_money.bottomText)
-                PushScaleformMovieMethodParameterString(_money.rightHandStat)
-                PushScaleformMovieMethodParameterInt(_money.rightHandStatIcon)
-                PushScaleformMovieMethodParameterInt(0)
-                EndScaleformMovieMethod()
-
-                BeginScaleformMovieMethod(scaleform_fg, "ADD_INCREMENTAL_CASH_ANIMATION_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(20)
-                EndScaleformMovieMethod()
-            end
-
-            if _xp.xpGained ~= 0 then
-                BeginScaleformMovieMethod(scaleform_fg, "ADD_REP_POINTS_AND_RANK_BAR_TO_WALL")
-                PushScaleformMovieMethodParameterInt(1)
-                PushScaleformMovieMethodParameterInt(_xp.xpGained)
-                PushScaleformMovieMethodParameterInt(_xp.xpBeforeGain)
-                PushScaleformMovieMethodParameterInt(_xp.minLevelXP)
-                PushScaleformMovieMethodParameterInt(_xp.maxLevelXP)
-                PushScaleformMovieMethodParameterInt(_xp.currentRank)
-                PushScaleformMovieMethodParameterInt(_xp.nextRank)
-                PushScaleformMovieMethodParameterString(_xp.rankTextSmall)
-                PushScaleformMovieMethodParameterString(_xp.rankTextBig)
-                EndScaleformMovieMethod()
-            end
-
-            BeginScaleformMovieMethod(scaleform_fg, "SHOW_STAT_WALL")
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform_fg, "createSequence")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()
 
             return scaleform, scaleform_bg, scaleform_fg
         end
         local scale, scale_bg, scale_fg = drawHeist(ZinitialText, Ztable, Zmoney, Zxp)
-        --StartScreenEffect("HeistCelebEnd")
         while showHeistBanner do
             Citizen.Wait(1)
-            --DrawRect(0.0, 0.0, 2.0, 2.0, 0, 44, 1, 160)
             DrawScaleformMovieFullscreenMasked(scale_bg, scale_fg, 255, 255, 255, 50)
             DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
         end
-        --StopScreenEffect("HeistCelebEnd")
         StartScreenEffect("HeistCelebToast")
     end)
 end
@@ -674,18 +292,10 @@ end
 function showSaving(_subtitle)
     Citizen.CreateThread(function()
         function drawScale(string1)
-            local scaleform = RequestScaleformMovie("HUD_SAVING")
-            while not HasScaleformMovieLoaded(scaleform) do
-                Citizen.Wait(0)
-            end
+            local scaleform = Scaleform.Request('HUD_SAVING')
 
-            BeginScaleformMovieMethod(scaleform, "SET_SAVING_TEXT_STANDALONE")
-            PushScaleformMovieMethodParameterInt(1) --the icon.. 1 is a full disk.. with a fade animation. Can't find the normal spinning disk.
-            PushScaleformMovieMethodParameterString(string1)
-            EndScaleformMovieMethod()
-
-            BeginScaleformMovieMethod(scaleform, "SHOW")
-            EndScaleformMovieMethod()
+            Scaleform.CallFunction(scaleform, false, "SET_SAVING_TEXT_STANDALONE", 1, string1)
+            Scaleform.CallFunction(scaleform, false, "SHOW")
 
             return scaleform
         end
