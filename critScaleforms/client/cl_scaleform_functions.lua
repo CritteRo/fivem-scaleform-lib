@@ -307,7 +307,7 @@ function showSaving(_subtitle)
     end)
 end
 
-function showWarehouse(_data)
+function showWarehouse()
     local scaleform = Scaleform.Request('WAREHOUSE')
 
     Scaleform.CallFunction(scaleform, false, "SET_WAREHOUSE_DATA", 'nameLabel', 'locationLabel', 'txd', 'size', 'capacity', 'amountStored', 'currentValue', 'specialItems', 'sellCooldown')
