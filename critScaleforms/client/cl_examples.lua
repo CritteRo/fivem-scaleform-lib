@@ -141,3 +141,9 @@ RegisterCommand('save2', function(source, args) --Usage: /save You can write any
     --TriggerEvent('cS.Saving', _text, _type, _waitTime, _playSound)
     TriggerEvent('cS.Saving', _message, 2, 7, true) --type 1 = scalefrom. 2 or other = non-scaleform.
 end)
+
+
+RegisterCommand('shutter', function(source, args) --Usage: /save You can write anything here
+    --TriggerEvent('cS.Saving', _text, _type, _waitTime, _playSound)
+    TriggerEvent('cS.Shutter', 7, true) --type 1 = scalefrom. 2 or other = non-scaleform.
+end)

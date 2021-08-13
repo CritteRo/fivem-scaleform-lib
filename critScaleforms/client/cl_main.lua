@@ -203,3 +203,24 @@ AddEventHandler("cS.Saving", function(_subtitle, _type, _waitTime, _playSound)
         end
     end)
 end)
+
+AddEventHandler("cS.Shutter", function(_waitTime, _playSound)
+    local showBanner = true
+    local scale = 0
+    if _playSound ~= nil and _playSound == true then
+        PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
+    end
+    scale = showShutter()
+    Citizen.CreateThread(function()
+        Citizen.Wait((tonumber(_waitTime) * 1000) - 1000)
+        Scaleform.CallFunction(scale, false, "CLOSE_THEN_OPEN_SHUTTER")
+        Wait(1000)
+        showBanner = false
+    end)
+    Citizen.CreateThread(function()
+        while showBanner do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
+    end)
+end)

@@ -324,3 +324,12 @@ function showBusySpinnerNoScaleform(_text)
     AddTextComponentSubstringPlayerName(_text)
     EndTextCommandBusyspinnerOn(1)
 end
+
+function showShutter()
+    local scaleform = Scaleform.Request('CAMERA_GALLERY')
+    Scaleform.CallFunction(scaleform, false, "CLOSE_THEN_OPEN_SHUTTER")
+    Scaleform.CallFunction(scaleform, false, "SHOW_PHOTO_FRAME", 1)
+    Scaleform.CallFunction(scaleform, false, "SHOW_REMAINING_PHOTOS", 1)
+    Scaleform.CallFunction(scaleform, false, "FLASH_PHOTO_FRAME")
+    return scaleform
+end
