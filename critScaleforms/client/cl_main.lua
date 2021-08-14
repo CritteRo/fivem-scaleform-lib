@@ -224,3 +224,35 @@ AddEventHandler("cS.Shutter", function(_waitTime, _playSound)
         end
     end)
 end)
+
+AddEventHandler("cS.Warehouse", function(_waitTime, _playSound)
+    local showBanner = true
+    local scale = 0
+    if _playSound ~= nil and _playSound == true then
+        PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
+    end
+    scale = showWarehouse()
+    Citizen.CreateThread(function()
+        Citizen.Wait(2000)
+        --Scaleform.CallFunction(scale, false, "SET_INPUT_EVENT", 2)
+        
+        Citizen.Wait(2000)
+        local ret = Scaleform.CallFunction(scale, true, "GET_CURRENT_SELECTION") --we get the scaleform return
+        while true do
+            if IsScaleformMovieMethodReturnValueReady(ret) then --scaleform takes it's sweet time, so we need to wait for the value to be registered, or calculated or something, idk
+                selectID = GetScaleformMovieMethodReturnValueInt(ret) --output value. Can be Int, String or Bool. In my case is Int, and it's the "slotID" value that you set with Scaleform.CallFunction(scaleform, false, "DISPLAY_VIEW", viewID, slotID)
+                print(selectID)
+                break
+            end
+            Citizen.Wait(0)
+        end
+        Citizen.Wait((tonumber(_waitTime) * 1000) - 4000)
+        showBanner = false
+    end)
+    Citizen.CreateThread(function()
+        while showBanner do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
+    end)
+end)

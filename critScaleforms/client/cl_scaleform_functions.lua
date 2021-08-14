@@ -310,12 +310,12 @@ end
 function showWarehouse()
     local scaleform = Scaleform.Request('WAREHOUSE')
 
-    Scaleform.CallFunction(scaleform, false, "SET_WAREHOUSE_DATA", 'nameLabel', 'locationLabel', 'txd', 'size', 'capacity', 'amountStored', 'currentValue', 'specialItems', 'sellCooldown')
+    Scaleform.CallFunction(scaleform, false, "SET_WAREHOUSE_DATA", 'nameLabel', 'locationLabel', 'txd', 'large', 16, 16, 50000, 1, 0)
     Scaleform.CallFunction(scaleform, false, "SET_PLAYER_DATA", 'gamerTag', 'organizationName', 'sellerRating', 'numSales', 'totalEarnings')
     Scaleform.CallFunction(scaleform, false, "SET_BUYER_DATA", 'buyerOrganization0', 'amount0', 'offerPrice0', 'buyerOrganization1', 'amount1', 'offerPrice1', 'buyerOrganization2', 'amount2', 'offerPrice2', 'buyerOrganization3', 'amount3', 'offerPrice3')
 
-    --Scaleform.CallFunction(scaleform, false, "SHOW_OVERLAY", 'titleLabel', 'messageLabel', 'acceptButtonLabel', 'cancelButtonLabel', 'success')
-    Scaleform.CallFunction(scaleform, false, "SET_MOUSE_INPUT", 0.0, 0.0)
+    Scaleform.CallFunction(scaleform, false, "SHOW_OVERLAY", 'titleLabel', 'messageLabel', 'acceptButtonLabel', 'cancelButtonLabel', 'success')
+    Scaleform.CallFunction(scaleform, false, "SET_MOUSE_INPUT", 0.6, 0.6)
     return scaleform
 end
 

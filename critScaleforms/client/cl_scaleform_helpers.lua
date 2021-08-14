@@ -32,7 +32,7 @@ function Scaleform.CallFunction(scaleform, returndata, the_function, ...)
         if not returndata then
             EndScaleformMovieMethod()
         else
-            EndScaleformMovieMethodReturnValue()
+            return EndScaleformMovieMethodReturnValue()
         end
     end
 end
