@@ -134,89 +134,40 @@ function showCredits(_role, _name, _x, _y)
                 Citizen.Wait(0)
             end
 
-            BeginScaleformMovieMethod(scaleform, "TEST_CREDIT_BLOCK")
-            ScaleformMovieMethodAddParamTextureNameString_2(role)
-            ScaleformMovieMethodAddParamTextureNameString_2(name)
-            PushScaleformMovieMethodParameterString('left')
-            PushScaleformMovieMethodParameterFloat(0.0)
-            PushScaleformMovieMethodParameterFloat(50.0)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(5)
-            PushScaleformMovieMethodParameterInt(10)
-            PushScaleformMovieMethodParameterInt(10)
-            EndScaleformMovieMethod()
+            Scaleform.CallFunction(scaleform, false, "TEST_CREDIT_BLOCK", role, name, 'left', 0.0, 50.0, 1, 5, 10, 10)
             
             --=================================--
                 --SETUP_CREDIT_BLOCK might give more customization, but further testing needs to be done.
                 --"HIDE" function completly breaks SETUP_CREDIT_BLOCK, which means to we need to rely on stopping the scaleform draw.
             --=================================--
-            --[[BeginScaleformMovieMethod(scaleform, "SETUP_CREDIT_BLOCK")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterFloat(0.0)
-            PushScaleformMovieMethodParameterFloat(0.0)
-            PushScaleformMovieMethodParameterInt(0)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(2)
-            EndScaleformMovieMethod()
 
-            BeginScaleformMovieMethod(scaleform, "ADD_ROLE_TO_CREDIT_BLOCK")
-            PushScaleformMovieMethodParameterInt(1)
-            ScaleformMovieMethodAddParamTextureNameString_2(role)
-            PushScaleformMovieMethodParameterFloat(0.0)
-            PushScaleformMovieMethodParameterInt(4)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterInt(0)
-            EndScaleformMovieMethod()
+            --ID | x_location | y_location | align (LEFT, CENTER, RIGHT) | fade_in_duration | fade_out_duration 
+            --Scaleform.CallFunction(scaleform, false, "SETUP_CREDIT_BLOCK", 1, 0.0, 0.0, "LEFT", 10, 10)
 
-            BeginScaleformMovieMethod(scaleform, "ADD_NAMES_TO_CREDIT_BLOCK")
-            PushScaleformMovieMethodParameterInt(1)
-            ScaleformMovieMethodAddParamTextureNameString_2(name)
-            PushScaleformMovieMethodParameterFloat(100.1)
-            PushScaleformMovieMethodParameterString("    ")
-            PushScaleformMovieMethodParameterBool(true)
-            EndScaleformMovieMethod()
+            --ID | role | x_offset | colour | is_raw_text | language (ja / japanese, ko / korean, zh / chinese, default)
+            --Scaleform.CallFunction(scaleform, false, "ADD_ROLE_TO_CREDIT_BLOCK", 1, role, 0.0, 4, true, "")
 
-            BeginScaleformMovieMethod(scaleform, "SHOW_CREDIT_BLOCK")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(2)
-            PushScaleformMovieMethodParameterInt(4)
-            PushScaleformMovieMethodParameterInt(1)
-            EndScaleformMovieMethod()]]
+            --ID | list_of_names_divided_by_delimiter | x_offset | delimiter | is_raw_text
+            --Scaleform.CallFunction(scaleform, false, "ADD_NAMES_TO_CREDIT_BLOCK", 1, name, 100.1, ";", true)
+
+            --ID | step_duration | anim_in_style (X, Y, xrotation, yrotation, default) | anim_in_value
+            --Scaleform.CallFunction(scaleform, false, "SHOW_CREDIT_BLOCK", 1, 2, "X", 1)
 
             --=================================================--
                 --This is a single line text (duh). Text below combines "name" font and "role" color from credit block.
             --=================================================--
-            --[[BeginScaleformMovieMethod(scaleform, "SETUP_SINGLE_LINE")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterFloat(0.0)
-            PushScaleformMovieMethodParameterFloat(0.0)
-            PushScaleformMovieMethodParameterInt(0)
-            EndScaleformMovieMethod()
+            
+            --ID | fade_in_duration | fade_out_duration | x_location |  y_location | align (LEFT, CENTER, RIGHT)
+            --Scaleform.CallFunction(scaleform, false, "SETUP_SINGLE_LINE", 1, 10, 10, 0.0, 0.0, "LEFT")
 
-            BeginScaleformMovieMethod(scaleform, "ADD_TEXT_TO_SINGLE_LINE")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterString("Single line text that can show everything you want")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterBool(true)
-            PushScaleformMovieMethodParameterInt(0)
-            PushScaleformMovieMethodParameterFloat(0.0)
-            EndScaleformMovieMethod()
+            --ID | text | font ($font2, $font5) | colour | is_raw_text | language (ja / japanese, ko / korean, zh / chinese, default) | y_offset
+            --Scaleform.CallFunction(scaleform, false, "ADD_TEXT_TO_SINGLE_LINE", 1, "TEXT", "$font2", 4, true, "", 0.0)
 
-            BeginScaleformMovieMethod(scaleform, "SHOW_SINGLE_LINE")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(0)
-            EndScaleformMovieMethod()
+            --ID | anim_in_style (X, Y, xrotation, yrotation, default) | anim_in_value
+            --Scaleform.CallFunction(scaleform, false, "SHOW_SINGLE_LINE", 1, "X", 1)
 
-            BeginScaleformMovieMethod(scaleform, "HIDE")
-            PushScaleformMovieMethodParameterInt(1)
-            PushScaleformMovieMethodParameterInt(2)
-            PushScaleformMovieMethodParameterInt(0)
-            PushScaleformMovieMethodParameterInt(0)
-            EndScaleformMovieMethod()]]
+            --ID | step_duration | anim_out_style (X, Y, xrotation, yrotation, default) | anim_out_value
+            --Scaleform.CallFunction(scaleform, false, "SHOW_SINGLE_LINE", 1, 10, "X", 1)
             return scaleform
         end
         local scale = drawCredits(_role, _name)
