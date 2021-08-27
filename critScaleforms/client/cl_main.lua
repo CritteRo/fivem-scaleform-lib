@@ -7,6 +7,7 @@ showMDone = false
 
 RegisterNetEvent("cS.HeistFinale")
 RegisterNetEvent("cS.MidsizeBanner")
+RegisterNetEvent("cS.Countdown")
 
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
     local showBanner = true
