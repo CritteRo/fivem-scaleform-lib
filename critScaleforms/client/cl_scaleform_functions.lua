@@ -284,3 +284,20 @@ function showShutter()
     Scaleform.CallFunction(scaleform, false, "FLASH_PHOTO_FRAME")
     return scaleform
 end
+
+function showGameFeed(title, subtitle, textblock, textureDirectory, textureName, rightAlign)
+    local scaleform = Scaleform.Request('GTAV_ONLINE')
+
+    Scaleform.CallFunction(scaleform, false, "SETUP_BIGFEED", rightAlign)
+    Scaleform.CallFunction(scaleform, false, "HIDE_ONLINE_LOGO")
+    Scaleform.CallFunction(scaleform, false, "SET_BIGFEED_INFO", "footer", textblock, 0, "", "", subtitle, "URL", title, 0)
+
+    RequestStreamedTextureDict(textureDirectory)
+    while not HasStreamedTextureDictLoaded(textureDirectory) do
+        Citizen.Wait(0)
+    end
+    Scaleform.CallFunction(scaleform, false, "SET_BIGFEED_IMAGE", textureDirectory, textureName)
+    Scaleform.CallFunction(scaleform, false, "SET_NEWS_CONTEXT", 0)
+    Scaleform.CallFunction(scaleform, false, "FADE_IN_BIGFEED")
+    return scaleform
+end

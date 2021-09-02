@@ -8,6 +8,7 @@ showMDone = false
 RegisterNetEvent("cS.HeistFinale")
 RegisterNetEvent("cS.MidsizeBanner")
 RegisterNetEvent("cS.Countdown")
+RegisterNetEvent("cS.GameFeed")
 
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
     local showBanner = true
@@ -240,6 +241,25 @@ AddEventHandler("cS.Warehouse", function(_waitTime, _playSound)
             Citizen.Wait(0)
         end
         Citizen.Wait((tonumber(_waitTime) * 1000) - 4000)
+        showBanner = false
+    end)
+    Citizen.CreateThread(function()
+        while showBanner do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
+    end)
+end)
+
+AddEventHandler("cS.GameFeed", function(_title, _subtitle, _textblock, _textureDict, _textureName, _rightAlign, _waitTime, _playSound)
+    local showBanner = true
+    local scale = 0
+    if _playSound ~= nil and _playSound == true then
+        PlaySoundFrontend(-1, "CHECKPOINT_PERFECT", "HUD_MINI_GAME_SOUNDSET", 1)
+    end
+    scale = showGameFeed(_title, _subtitle, _textblock, _textureDict, _textureName, _rightAlign)
+    Citizen.CreateThread(function()
+        Citizen.Wait(_waitTime * 1000)
         showBanner = false
     end)
     Citizen.CreateThread(function()
