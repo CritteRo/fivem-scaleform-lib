@@ -153,6 +153,9 @@ RegisterCommand('whouse', function(source, args) --Usage: /save You can write an
     TriggerEvent('cS.Warehouse', 20, true) --type 1 = scalefrom. 2 or other = non-scaleform.
 end)
 
+RegisterCommand('msm', function(source, args) --Usage: /msm STATE (0 = OFF | 1 = EDIT | 2 = PLAY)
+    TriggerEvent('cS.MusicStudioMonitor', tonumber(args[1]), 20)
+end)
 
 RegisterCommand('gamefeed', function(source, args)
     --TriggerEvent(_title, _subtitle, _textblock, _textureDict, _textureName, _rightAlign, _waitTime, _playSound)

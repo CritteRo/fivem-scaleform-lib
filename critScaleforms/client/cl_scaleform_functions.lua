@@ -270,6 +270,13 @@ function showWarehouse()
     return scaleform
 end
 
+function showMusicStudioMonitor(state)
+    local scaleform = Scaleform.Request('MUSIC_STUDIO_MONITOR')
+
+    Scaleform.CallFunction(scaleform, false, "SET_STATE", state)
+    return scaleform
+end
+
 function showBusySpinnerNoScaleform(_text)
     BeginTextCommandBusyspinnerOn("STRING")
     AddTextComponentSubstringPlayerName(_text)
