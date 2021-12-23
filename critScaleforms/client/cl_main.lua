@@ -251,6 +251,25 @@ AddEventHandler("cS.Warehouse", function(_waitTime, _playSound)
     end)
 end)
 
+AddEventHandler("cS.MusicStudioMonitor", function(_state, _waitTime)
+    local showMonitor = true
+    local scale = 0
+
+    scale = showMusicStudioMonitor(_state)
+
+    Citizen.CreateThread(function()
+        Citizen.Wait(_waitTime * 1000)
+        showMonitor = false
+    end)
+
+    Citizen.CreateThread(function()
+        while showMonitor do
+            Citizen.Wait(1)
+            DrawScaleformMovieFullscreen(scale, 255, 255, 255, 255)
+        end
+    end)
+end)
+
 AddEventHandler("cS.GameFeed", function(_title, _subtitle, _textblock, _textureDict, _textureName, _rightAlign, _waitTime, _playSound)
     local showBanner = true
     local scale = 0
