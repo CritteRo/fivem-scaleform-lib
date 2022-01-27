@@ -1,3 +1,6 @@
+--[[ COMMENTED OUT, AS TO NOT POLLUTE THE COMMANDS LIST FOR FOLKS THAT USE THIS. FEEL FREE TO COPY THOSE COMMANDS IN YOUR SCRIPTS INSTEAD
+
+
 RegisterCommand('ba', function() --shows big banner
     --TriggerEvent('cS.banner', _title, _subtitle, _waitTimeSeconds, _playShound)
     TriggerEvent('cS.banner', "~y~Test Banner~s~.", "You ~g~can ~r~use ~y~colors ~b~here ~s~too.", 5, true)
@@ -161,3 +164,5 @@ RegisterCommand('gamefeed', function(source, args)
     --TriggerEvent(_title, _subtitle, _textblock, _textureDict, _textureName, _rightAlign, _waitTime, _playSound)
     TriggerEvent("cS.GameFeed", "_title", "_subtitle", "_textblock", "v_73_fib01_txd", "xj_v_fibscreen", false, 7, true)
 end)
+
+]]
