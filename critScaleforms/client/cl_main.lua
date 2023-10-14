@@ -3,12 +3,23 @@ showRP = false
 showMI = false
 showST = false
 showPW = false
+showCD = false
 showMDone = false
 
 RegisterNetEvent("cS.HeistFinale")
 RegisterNetEvent("cS.MidsizeBanner")
 RegisterNetEvent("cS.Countdown")
 RegisterNetEvent("cS.GameFeed")
+
+RegisterNetEvent('cS.ForceCloseScaleforms', function()
+    showMQ = false
+    showRP = false
+    showMI = false
+    showST = false
+    showPW = false
+    showCD = false
+    showMDone = false
+end)
 
 AddEventHandler("cS.banner", function(_title, _subtitle, _waitTime, _playSound)
     local showBanner = true
@@ -99,7 +110,7 @@ AddEventHandler("cS.PopupWarning", function(_title, _subtitle, _errorCode, _wait
 end)
 
 AddEventHandler("cS.Countdown", function(_r, _g, _b, _waitTime, _playSound)
-    local showCD = true
+    showCD = true
     local time = _waitTime
     local scale = 0
     if _playSound ~= nil and _playSound == true then
